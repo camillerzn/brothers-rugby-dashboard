@@ -1,0 +1,534 @@
+﻿date,player,TD,HSR,SD,m_min,top_Speed,accel_min,decel_min,type,position
+27/1/2026,Tieli,4861.57,737.01,78.99,50.28,7.27,,,Full Training,Forward
+27/1/2026,Della,5423.72,730.36,264.83,56.1,6.58,,,Full Training,Backward
+27/1/2026,G.Urquhart,5639.33,983.54,296.64,58.33,6.96,,,Full Training,Backward
+27/1/2026,Noah,5976.5,503.12,170.74,61.82,6.93,,,Full Training,Forward
+27/1/2026,Remi,5066.37,1148.88,171.67,52.4,8.03,,,Full Training,Forward
+27/1/2026,W.Wilson,5335.02,512.92,118.58,55.18,6.7,,,Full Training,Forward
+27/1/2026,Prass,6447.43,989.15,507.19,66.69,8.19,,,Full Training,Backward
+27/1/2026,Leo,5332.67,765.61,325.14,55.16,7.85,,,Full Training,Forward
+27/1/2026,H.Grant,6031.04,902.57,378.66,62.38,7.62,,,Full Training,Backward
+29/1/2026,G.Urquhart,6355.11,1270.84,524.84,68.93,7.15,,,Full Training,Backward
+29/1/2026,Guido,5845.89,849.07,406.89,63.4,8.31,,,Full Training,Backward
+29/1/2026,Della,5769.04,835.97,367.78,62.57,6.79,,,Full Training,Backward
+29/1/2026,W.Wilson,5678.49,555.45,75.22,61.59,5.82,,,Full Training,Forward
+29/1/2026,Prass,6162.56,822.16,224.9,66.84,7.08,,,Full Training,Backward
+29/1/2026,Noah,5996.48,683.33,153.02,65.04,6.31,,,Full Training,Forward
+29/1/2026,Leo,5313.9,871.98,417.29,57.63,7.71,,,Full Training,Forward
+29/1/2026,Remi,5619.71,1469.88,128.44,60.95,6.68,,,Full Training,Forward
+29/1/2026,H.Grant,5699.29,741.63,261.26,61.81,6.8,,,Full Training,Backward
+29/1/2026,Kaelan,5327.3,1539.81,337.54,57.78,7.44,,,Full Training,Backward
+3/2/2026,B.Hemps,4958.98,1409.99,204.34,62.84,7.42,0.06,0.13,Full Training,Forward
+3/2/2026,George,5605.78,344.53,44.04,60.1,5.59,0.03,0.08,Full Training,Forward
+3/2/2026,D.Fraser,5729.84,834.9,399.21,58.85,7.4,0.09,0.1,Full Training,Forward
+3/2/2026,W.Wilson,6371.67,734.32,177.12,65.44,5.87,0.1,0.19,Full Training,Forward
+3/2/2026,Della,6610.44,1217.69,599.77,67.89,7.18,0.13,0.28,Full Training,Backward
+3/2/2026,Prass,7385.36,1354.22,600.93,75.85,8.62,0.14,0.28,Full Training,Backward
+3/2/2026,Remi,6123.51,1562.25,284.17,62.89,8.12,0.07,0.18,Full Training,Forward
+3/2/2026,H.Grant,5087.21,716.31,270.83,52.25,7.09,0.06,0.1,Full Training,Backward
+3/2/2026,Guido,5576.03,1074.06,615.35,57.27,7.97,0.23,0.27,Full Training,Backward
+3/2/2026,Leo,2377.12,285.46,132.67,24.41,7.25,0.04,0.01,Full Training,Backward
+3/2/2026,Noah,6649.61,808.86,336.27,68.29,6.77,0.07,0.16,Full Training,Forward
+3/2/2026,G.Urquhart,7226.74,1508.98,658.01,74.22,7.7,0.2,0.31,Full Training,Backward
+3/2/2026,Tieli,4444.42,813.12,69,55.16,6.78,0.05,0.05,Full Training,Forward
+3/2/2026,Kaelan,7147.78,2815.41,970.2,73.41,8.72,0.11,0.28,Full Training,Backward
+5/2/2026,Remi,5326.3,1315.2,257.6,54.2,7.6,0.2,0.23,Full Training,Forward
+5/2/2026,G.Urquhart,6202.2,1315.5,571,63.2,7.7,0.3,0.3,Full Training,Backward
+5/2/2026,D.Fraser,5618.3,686,226.3,57.2,6.5,0.08,0.05,Full Training,Forward
+5/2/2026,Della,5753,1022,504.5,58.6,7.7,0.18,0.22,Full Training,Backward
+5/2/2026,Leo,5995.9,865.4,353.4,61.1,7.4,0.19,0.18,Full Training,Forward
+5/2/2026,W.Wilson,5629.3,640.5,178.3,57.3,6.3,0.09,0.22,Full Training,Forward
+5/2/2026,Guido,2012.1,312.5,166.6,43.1,7.9,0.14,0.11,Full Training,Backward
+5/2/2026,Tieli,5169.1,1057.3,78.9,52.6,6.1,0.1,0.13,Full Training,Forward
+5/2/2026,Kaelan,6098.8,2036.1,517.9,62.1,7.4,0.3,0.22,Full Training,Backward
+5/2/2026,George,5193.8,306.3,37.6,52.9,5.3,0.12,0.04,Full Training,Forward
+5/2/2026,Prass,6936.3,1327.5,534.6,70.6,7.4,0.26,0.28,Full Training,Backward
+5/2/2026,H.Grant,5779.4,919.7,397.3,58.9,8.3,0.13,0.26,Full Training,Backward
+5/2/2026,Noah,6333.3,684.7,225.8,64.5,6.8,0.06,0.21,Full Training,Forward
+10/2/2026,W.Wilson,6018.65,953.79,240.55,57.67,7.24,0.06,0.14,Full Training,Forward
+10/2/2026,Della,6309.03,1120.88,593.1,60.45,7.36,0.2,0.29,Full Training,Backward
+10/2/2026,Remi,5871.1,1495.81,214.17,56.25,7.26,0.14,0.18,Full Training,Forward
+10/2/2026,G.Urquhart,7000.74,1475.59,717.34,67.08,7.7,0.12,0.29,Full Training,Backward
+10/2/2026,Guido,6075.38,1290.76,759.52,58.21,8.76,0.35,0.39,Full Training,Backward
+10/2/2026,Leo,6272.52,957.42,383.44,60.53,7.07,0.09,0.13,Full Training,Forward
+10/2/2026,Noah,6392.35,667.75,273.39,61.25,6.6,0.06,0.11,Full Training,Forward
+10/2/2026,D.Fraser,5226.4,623.09,253.58,55.32,6.85,0.07,0.08,Full Training,Forward
+10/2/2026,Prass,6762.82,1168.52,523.25,64.8,7.65,0.12,0.24,Full Training,Backward
+10/2/2026,B.Hemps,6198.33,1748.84,279.4,59.92,7.84,0.11,0.16,Full Training,Forward
+10/2/2026,H.Grant,6465.09,1124.98,539.23,61.95,8.01,0.18,0.25,Full Training,Backward
+17/2/2026,H.Grant,5948.36,997.57,482.4,57.24,8.94,0.2,0.26,Full Training,Backward
+17/2/2026,Leo,5810.63,952.57,530.74,55.92,8.48,0.18,0.12,Full Training,Forward
+17/2/2026,Prass,6629.7,1250.9,597.19,63.81,8.3,0.24,0.11,Full Training,Backward
+17/2/2026,Noah,5831.03,533.88,246.91,56.11,6.94,0.07,0.14,Full Training,Forward
+17/2/2026,Clifty,5038.96,631.36,338.82,48.49,8.09,0.14,0.15,Full Training,Forward
+17/2/2026,Della,6586,1211.82,698.46,63.39,7.74,0.24,0.17,Full Training,Backward
+17/2/2026,Kaelan,5635.85,1406.95,411,54.24,9.43,0.12,0.06,Full Training,Backward
+17/2/2026,D.Fraser,5761.46,585.89,262.53,55.44,7.85,0.1,0.02,Full Training,Forward
+17/2/2026,George,5065.39,307.13,90.17,48.77,6.82,0.04,0.07,Full Training,Forward
+17/2/2026,Remi,5444.54,1358.66,279.41,52.4,8.55,0.15,0.14,Full Training,Forward
+17/2/2026,W.Wilson,5596.06,735.31,357.63,53.85,7.61,0.04,0.07,Full Training,Forward
+17/2/2026,B.Hemps,5227.07,1027.18,197.38,50.3,7.8,0.12,0.11,Full Training,Forward
+17/2/2026,Henry,6144.51,946.32,435.11,61.11,8.28,0.27,0.19,Full Training,Backward
+19/2/2026,Prass,5632.53,1013.85,594.54,57.03,8.12,0.23,0.11,Full Training,Backward
+19/2/2026,H.Grant,5011.15,885.37,492.38,50.74,8.71,0.22,0.15,Full Training,Backward
+19/2/2026,Henry,6291.8,1092.67,470.21,63.7,8.55,0.31,0.22,Full Training,Backward
+19/2/2026,George,4537.55,292.21,89.92,45.94,6.28,0.04,0.09,Full Training,Forward
+19/2/2026,W.Wilson,5307.9,642.18,298.18,53.74,7.37,0.06,0.1,Full Training,Forward
+19/2/2026,Kaelan,6549.18,2342.72,796.73,66.31,9.35,0.27,0.29,Full Training,Backward
+19/2/2026,Clifty,5177.94,848.3,428.73,52.43,7.96,0.13,0.2,Full Training,Forward
+19/2/2026,G.Urquhart,7488.98,1657.53,898.12,75.83,8.16,0.2,0.3,Full Training,Backward
+19/2/2026,Della,6501.56,1476.34,776.14,65.83,8.21,0.23,0.21,Full Training,Backward
+19/2/2026,Leo,5134.57,822.73,446.68,51.99,8.71,0.2,0.24,Full Training,Forward
+19/2/2026,Noah,5943.16,784.96,405.5,60.17,7.54,0.11,0.07,Full Training,Forward
+19/2/2026,Remi,4707.55,1215.36,272.67,47.66,8.29,0.12,0.07,Full Training,Forward
+19/2/2026,D.Fraser,4634.93,605.27,250.03,49.75,7.97,0.13,0.11,Full Training,Forward
+24/2/2026,Clifty,5369.88,1811.88,489.66,59.97,8.03,0.16,0.15,Full Training,Forward
+24/2/2026,Henry,5771.81,1167.76,584.48,64.45,7.97,0.1,0.13,Full Training,Backward
+24/2/2026,D.Fraser,4994.18,840.56,335.25,55.77,7.52,0.07,0.18,Full Training,Forward
+24/2/2026,G.Urquhart,5368.7,1291.14,732.48,59.95,7.96,0.15,0.18,Full Training,Backward
+24/2/2026,George,3471.86,274.77,43.6,38.77,5.33,0.02,0.06,Full Training,Forward
+24/2/2026,Tieli*,1615.8,336.55,87.44,35.6,7.56,0.01,0,Full Training,Backward
+24/2/2026,Della,5575.09,1117.79,708.08,62.26,8.11,0.17,0.34,Full Training,Backward
+24/2/2026,Leo,5731.48,1265.8,626.57,64,8.32,0.16,0.25,Full Training,Forward
+24/2/2026,Noah,6213.31,1115.77,502.48,69.38,7.68,0.07,0.18,Full Training,Forward
+24/2/2026,H.Grant,4498.47,897.15,385.28,50.23,8.69,0.09,0.12,Full Training,Backward
+24/2/2026,Prass,5825.71,1455.2,764.46,65.06,8.66,0.25,0.31,Full Training,Backward
+24/2/2026,B.Hemps,5731.9,1743.32,560.28,64.01,8.19,0.09,0.22,Full Training,Forward
+24/2/2026,Remi,4514.6,1363.95,281.22,50.41,8.25,0.08,0.08,Full Training,Forward
+24/2/2026,W.Wilson,5567.25,853.18,316.13,62.17,7.6,0.13,0.19,Full Training,Forward
+24/2/2026,Kaelan,4945.38,1848.39,564.89,55.22,9.33,0.19,0.17,Full Training,Backward
+24/2/2026,Athen,5637.17,2083.41,630.24,63.45,8.76,0.12,0.24,Full Training,Backward
+24/2/2026,Guido,5377.84,1299,804.22,60.05,8.77,0.25,0.19,Full Training,Backward
+26/2/2026,Guido,5086.18,901.66,491.69,53.16,7.87,0.37,0.32,Full Training,Backward
+26/2/2026,George,4319.21,367.96,72.59,45.14,5.84,0.11,0.09,Full Training,Forward
+26/2/2026,Clifty,4854.23,1431.59,314.08,50.73,6.68,0.19,0.26,Full Training,Forward
+26/2/2026,Remi,4550.25,1186.93,161.56,47.56,6.67,0.15,0.17,Full Training,Forward
+26/2/2026,G.Urquhart,5462,1005.93,469.88,57.08,7.21,0.14,0.19,Full Training,Backward
+26/2/2026,Della,5535.51,1050.53,615.78,57.85,7.82,0.22,0.19,Full Training,Backward
+26/2/2026,D.Fraser,4247.02,452.22,91.19,44.39,6.17,0.05,0.13,Full Training,Forward
+26/2/2026,W.Wilson,4869.91,667.55,209.1,50.9,7.16,0.08,0.14,Full Training,Forward
+26/2/2026,Henry,5229.13,857.42,310.69,54.65,6.85,0.21,0.23,Full Training,Backward
+26/2/2026,Leo,5302.48,760.54,267.87,55.42,7,0.23,0.17,Full Training,Forward
+26/2/2026,Noah,5704.91,817.11,269.74,59.62,7.1,0.18,0.13,Full Training,Forward
+26/2/2026,H.Grant,4686.8,704.02,315.12,48.98,7.58,0.21,0.21,Full Training,Backward
+26/2/2026,Kaelan,5302.62,1611.04,508.32,55.42,7.84,0.31,0.26,Full Training,Backward
+26/2/2026,Prass,6243.48,1362.11,776.39,65.25,7.87,0.45,0.25,Full Training,Backward
+26/2/2026,Athen,5163.81,1338.54,487.99,53.97,8.09,0.25,0.16,Full Training,Backward
+26/2/2026,B.Hemps,5087.91,1359.1,355.2,53.17,6.7,0.2,0.14,Full Training,Forward
+3/3/2026,W.Wilson,5720.65,784.76,219.64,53.02,7.32,0.07,0.09,Full Training,Forward
+3/3/2026,B.Hemps,6175.76,1744.26,448.47,57.24,7.36,0.1,0.19,Full Training,Forward
+3/3/2026,Henry,6313.32,1094.35,449.47,58.51,6.87,0.11,0.11,Full Training,Backward
+3/3/2026,Clifty,5774.48,1619.6,340.24,53.52,7.66,0.15,0.16,Full Training,Forward
+3/3/2026,G.Urquhart,6410.83,1327.6,748.45,59.41,7.65,0.14,0.2,Full Training,Backward
+3/3/2026,Prass,7467.8,1664.71,819.88,69.21,8.44,0.34,0.25,Full Training,Backward
+3/3/2026,Noah*,3120.93,479.02,133.41,35.03,6.79,0,0.07,Full Training,Backward
+3/3/2026,H.Grant,4295.92,449.61,176.75,39.82,7.55,0.07,0.12,Full Training,Backward
+3/3/2026,Leo,5945.38,1031.21,391.61,55.1,7.96,0.11,0.2,Full Training,Forward
+3/3/2026,Remi,5781.33,1752.66,253.17,53.58,7.08,0.06,0.14,Full Training,Backward
+3/3/2026,D.Fraser,4829.2,477.52,131.21,44.76,7.01,0.03,0.04,Full Training,Forward
+3/3/2026,Della,6179.01,1340.8,756.51,57.27,7.6,0.15,0.21,Full Training,Backward
+3/3/2026,Guido,5729.83,1148.52,655.93,53.11,8.3,0.2,0.21,Full Training,Backward
+3/3/2026,Kaelan,6510.74,2432.35,675.47,60.34,8.53,0.24,0.22,Full Training,Backward
+3/3/2026,George,5359.85,414.15,41.93,49.67,5.41,0.05,0.02,Full Training,Forward
+5/3/2026,D.Fraser,4546.17,534.35,239.57,50.82,7.11,0.12,0.09,Full Training,Forward
+5/3/2026,Clifty,5483.7,1587.97,303.47,61.3,7.31,0.16,0.26,Full Training,Forward
+5/3/2026,George,4015.9,285.61,81.52,44.9,6.41,0.07,0.12,Full Training,Forward
+5/3/2026,B.Hemps,4667.13,1434.35,314.4,52.18,7.14,0.11,0.18,Full Training,Forward
+5/3/2026,G.Urquhart,5580.99,1167.12,631.31,62.39,7.81,0.27,0.29,Full Training,Backward
+5/3/2026,W.Wilson,5245.08,580.28,205.34,58.64,6.24,0.08,0.2,Full Training,Forward
+5/3/2026,Prass,5655.97,1077.98,557.13,63.23,8.06,0.21,0.31,Full Training,Backward
+5/3/2026,Della,5365.27,920.26,419.6,59.98,7.98,0.17,0.18,Full Training,Backward
+5/3/2026,Henry,5992.03,981.41,390.39,66.99,7.63,0.22,0.24,Full Training,Backward
+5/3/2026,Athen,5312.69,1663.91,553.84,59.39,8.65,0.15,0.18,Full Training,Backward
+5/3/2026,Guido,5844.63,1360.62,768.4,65.34,7.97,0.36,0.31,Full Training,Backward
+5/3/2026,Kaelan,5709.8,1903.77,439.15,63.83,8.37,0.31,0.4,Full Training,Backward
+10/3/2026,Della,6783.05,1425.56,767.59,68.67,7.8,0.14,0.29,Full Training,Backward
+10/3/2026,George,5772.76,522.79,51.41,58.43,5.54,0.02,0.07,Full Training,Forward
+10/3/2026,Remi,6094.7,1913.33,442.6,61.69,8.49,0.11,0.21,Full Training,Forward
+10/3/2026,Athen,6802.05,2299.05,962.05,68.85,8.96,0.19,0.33,Full Training,Backward
+10/3/2026,D.Fraser*,1648.36,271.44,172.94,19.53,7.79,0.07,0.02,Full Training,Backward
+10/3/2026,Clifty,5940.66,1909.46,410.46,60.13,7.86,0.19,0.16,Full Training,Forward
+10/3/2026,Prass,7365.21,1858.21,1044.11,74.55,8.85,0.33,0.32,Full Training,Backward
+10/3/2026,H.Grant,6556.45,1282.48,579.69,66.36,9.02,0.08,0.14,Full Training,Backward
+10/3/2026,Leo,6118.43,1122.44,557.81,61.93,8.84,0.17,0.15,Full Training,Forward
+10/3/2026,B.Hemps,6378.77,1934.46,378.02,64.56,7.62,0.13,0.18,Full Training,Forward
+10/3/2026,Guido,5669.39,1385.84,905.71,57.38,8.67,0.35,0.27,Full Training,Backward
+10/3/2026,W.Wilson,6154.65,917.34,330.86,62.29,7.24,0.06,0.08,Full Training,Forward
+10/3/2026,G.Urquhart,7210.63,1810.8,959.09,72.98,8.12,0.27,0.2,Full Training,Backward
+10/3/2026,Kaelan,7415.41,2710.86,1016.99,75.05,9.4,0.29,0.32,Full Training,Backward
+10/3/2026,Henry,6482.26,1285.13,570.71,65.61,8.44,0.17,0.17,Full Training,Backward
+10/3/2026,Della,684.65,229.09,90.24,132.94,6.36,,,15v15 Transition 1,Backward
+10/3/2026,George,527.73,58.3,0.52,102.47,4.75,,,15v15 Transition 1,Forward
+10/3/2026,Remi,572.79,234.68,25.83,111.22,6.43,,,15v15 Transition 1,Forward
+10/3/2026,Athen,559.66,240.57,145.62,108.67,8.07,,,15v15 Transition 1,Backward
+10/3/2026,D.Fraser*,,,,,,,,15v15 Transition 1,Backward
+10/3/2026,Clifty,534.94,199.29,15.35,103.87,6.31,,,15v15 Transition 1,Forward
+10/3/2026,Prass,727.42,301.27,170.65,141.25,7.35,,,15v15 Transition 1,Backward
+10/3/2026,H.Grant,641.88,188.95,47,124.64,7.29,,,15v15 Transition 1,Backward
+10/3/2026,Leo,412.99,69.22,50.17,80.19,7.88,,,15v15 Transition 1,Forward
+10/3/2026,B.Hemps,503.66,175.21,42.38,97.8,7.62,,,15v15 Transition 1,Forward
+10/3/2026,Guido,538.91,185.39,105.98,104.64,7.78,,,15v15 Transition 1,Backward
+10/3/2026,W.Wilson,592.57,69.32,8.71,115.06,5.08,,,15v15 Transition 1,Forward
+10/3/2026,G.Urquhart,713.9,299.99,167.91,138.62,6.64,,,15v15 Transition 1,Backward
+10/3/2026,Kaelan,630.45,315.95,118.16,122.42,8.07,,,15v15 Transition 1,Backward
+10/3/2026,Henry,551.32,166.32,107.72,107.05,7.36,,,15v15 Transition 1,Backward
+10/3/2026,Della,588.51,181.01,131.38,107.98,7.44,,,15v15 Transition 2,Backward
+10/3/2026,George,546.68,47.33,0,100.31,4.49,,,15v15 Transition 2,Forward
+10/3/2026,Remi,515.82,189.45,14.13,94.65,5.55,,,15v15 Transition 2,Forward
+10/3/2026,Athen,475.36,146.51,19.39,87.22,5.87,,,15v15 Transition 2,Backward
+10/3/2026,D.Fraser*,,,,,,,,15v15 Transition 2,Backward
+10/3/2026,Clifty,348.59,88.67,38.03,63.96,7.23,,,15v15 Transition 2,Forward
+10/3/2026,Prass,646.42,160.81,70.75,118.61,7.3,,,15v15 Transition 2,Backward
+10/3/2026,H.Grant,600.09,151.94,55.36,110.11,5.99,,,15v15 Transition 2,Backward
+10/3/2026,Leo,546.03,105.64,58.92,100.19,6.02,,,15v15 Transition 2,Forward
+10/3/2026,B.Hemps,578.89,183.03,19.61,106.22,6.43,,,15v15 Transition 2,Forward
+10/3/2026,Guido,114.3,0,0,20.97,3.55,,,15v15 Transition 2,Backward
+10/3/2026,W.Wilson,572.03,87.51,41.31,104.96,6.58,,,15v15 Transition 2,Forward
+10/3/2026,G.Urquhart,538.49,162.65,85.77,98.81,7.33,,,15v15 Transition 2,Backward
+10/3/2026,Kaelan,690.69,355.94,68.71,126.73,7.26,,,15v15 Transition 2,Backward
+10/3/2026,Henry,526.71,41.26,13.6,96.64,6.53,,,15v15 Transition 2,Backward
+12/3/2026,Henry,5553.91,1049.6,557.25,59.45,7.66,0.14,0.19,Full Training,Backward
+12/3/2026,Remi,4642.06,1198.66,195.2,49.69,6.64,0.1,0.14,Full Training,Forward
+12/3/2026,Kaelan*,2708.88,700.78,218.02,33.78,8.12,0.08,0.05,Full Training,Backward
+12/3/2026,H.Grant,5387.56,834.66,405.54,57.67,7.67,0.14,0.24,Full Training,Backward
+12/3/2026,Clifty,4908.68,1315.68,283.67,52.55,7.68,0.14,0.15,Full Training,Forward
+12/3/2026,George,4230.08,301.9,52.6,45.28,5.57,0.09,0.08,Full Training,Forward
+12/3/2026,Prass,6241.51,1273.91,658.71,66.81,8.69,0.13,0.15,Full Training,Backward
+12/3/2026,Guido,4926.07,857.68,480.02,52.73,8.24,0.2,0.19,Full Training,Backward
+12/3/2026,Della,5455.38,859.83,359.3,58.4,8.01,0.08,0.13,Full Training,Backward
+12/3/2026,W.Wilson,4773.26,571.93,158.04,51.1,5.92,0.08,0.1,Full Training,Backward
+12/3/2026,Leo,5344.79,844.13,339.64,57.21,6.82,0.16,0.22,Full Training,Forward
+12/3/2026,Athen,5791.95,1720.2,684.86,62,8.55,0.15,0.16,Full Training,Backward
+12/3/2026,B.Hemps,4664.42,1217.29,339.57,49.93,7.01,0.15,0.08,Full Training,Forward
+14/3/2026,Prass,3713.9,640.54,276.76,88.01,8.62,0.05,0.17,Game 1st Half,Backward
+14/3/2026,Athen,2117.07,754.84,279.68,71.72,7.48,0.05,0.14,Game 1st Half,Backward
+14/3/2026,George,2654.77,160.46,20.14,62.91,5.6,0.1,0.17,Game 1st Half,Forward
+14/3/2026,Henry,3129.96,603.14,245.65,74.17,7.94,0.24,0.36,Game 1st Half,Backward
+14/3/2026,Kaelan,3403.32,1248.96,506.9,80.65,8.86,0.31,0.4,Game 1st Half,Backward
+14/3/2026,Clifty,3016.98,1040.04,157.22,71.49,6.7,0.24,0.31,Game 1st Half,Forward
+14/3/2026,B.Hemps,2908.42,827.18,240.3,68.92,7.76,0.21,0.48,Game 1st Half,Forward
+14/3/2026,W.Wilson,2923.18,492.37,170.05,69.27,6.63,0.14,0.38,Game 1st Half,Forward
+14/3/2026,G.Urquhart,2418.66,567.96,274.42,57.31,7.45,0.19,0.19,Game 1st Half,Backward
+14/3/2026,Leo,3001.65,512.58,269.66,71.13,8.86,0.19,0.5,Game 1st Half,Backward
+14/3/2026,H.Grant,3220.25,691.78,344.14,76.31,7.88,0.29,0.4,Game 1st Half,Backward
+14/3/2026,Della*,795.4,247.11,139.24,22.73,8.38,0.02,0.1,Game 1st Half,Backward
+14/3/2026,Prass,3879.52,915.34,454.71,84.98,9.18,0.18,0.44,Game 2nd Half,Backward
+14/3/2026,Athen,3856.87,1620.86,646.47,84.52,9.43,0.16,0.36,Game 2nd Half,Backward
+14/3/2026,George,2475.84,210.93,2.72,54.26,4.84,0.07,0.07,Game 2nd Half,Forward
+14/3/2026,Henry,3310.78,747.09,405.49,72.55,7.73,0.18,0.36,Game 2nd Half,Backward
+14/3/2026,Kaelan,3799.01,1346.17,595.03,83.22,9.55,0.24,0.51,Game 2nd Half,Backward
+14/3/2026,Clifty,3202.97,1214.83,198.66,70.19,6.54,0.13,0.27,Game 2nd Half,Forward
+14/3/2026,B.Hemps,3395.82,1206.45,309.75,74.39,7.59,0.22,0.33,Game 2nd Half,Forward
+14/3/2026,W.Wilson,3163.11,534.85,200.96,69.29,7.42,0.16,0.36,Game 2nd Half,Forward
+14/3/2026,G.Urquhart,,,,,,,,Game 2nd Half,Backward
+14/3/2026,Leo,767.55,107.43,24.24,20.62,5.78,0.02,0.11,Game 2nd Half,Backward
+14/3/2026,H.Grant,1372.68,310.52,207.49,37.08,8.72,0.11,0.22,Game 2nd Half,Backward
+14/3/2026,Della*,,,,,,,,Game 2nd Half,Backward
+17/3/2026,Noah,6089.12,841.05,294.62,59.45,6.82,0.11,0.06,Full Training,Forward
+17/3/2026,W.Wilson,5700.26,725.4,181.63,55.66,6.02,0.04,0.12,Full Training,Forward
+17/3/2026,H.Grant,6199.53,1010.97,448.4,60.53,8.26,0.16,0.24,Full Training,Backward
+17/3/2026,G.Urquhart,6083.99,1163.14,503.02,59.4,7.4,0.21,0.16,Full Training,Backward
+17/3/2026,Athen,7540.21,2759.66,1256.79,73.62,8.76,0.22,0.29,Full Training,Backward
+17/3/2026,Remi,4308.6,1342.25,279.54,42.07,6.86,0.1,0.13,Full Training,Forward
+17/3/2026,Kaelan,6201.55,1717.94,597.98,60.55,8.46,0.18,0.22,Full Training,Backward
+17/3/2026,B.Hemps,6357.53,1924.24,471.26,62.08,7.11,0.17,0.24,Full Training,Forward
+17/3/2026,Guido,5340.94,1073.33,704.51,52.15,8.54,0.31,0.19,Full Training,Backward
+17/3/2026,George,4662.21,285.72,26.83,45.52,5.26,0.01,0.02,Full Training,Forward
+17/3/2026,Henry,6203.63,972.18,328.9,60.57,6.12,0.19,0.14,Full Training,Backward
+17/3/2026,Tieli,4013.28,660.15,1.02,39.19,4.8,0.01,0.02,Full Training,Forward
+17/3/2026,Prass,7465.74,1751.91,1065.43,72.9,8.54,0.21,0.19,Full Training,Backward
+17/3/2026,Della,6402.98,1104.59,483.61,62.52,7.76,0.16,0.14,Full Training,Backward
+17/3/2026,Clifty,5793.05,1569.54,282.48,56.56,6.78,0.14,0.16,Full Training,Forward
+19/3/2026,Athen,6537.72,1855.8,673.41,66.78,8.17,0.18,0.3,Full Training,Backward
+19/3/2026,George,3389.2,118.42,19.6,34.62,5.56,0.05,0.04,Full Training,Forward
+19/3/2026,Tieli,3769.94,505.49,3.6,38.51,5.03,0.04,0.06,Full Training,Forward
+19/3/2026,W.Wilson,5309.1,529.83,119.28,54.23,6.18,0.12,0.15,Full Training,Forward
+19/3/2026,Clifty,5433.51,1455.67,266.71,55.5,7.06,0.14,0.26,Full Training,Forward
+19/3/2026,G.Urquhart,6253.99,1351.01,614.08,63.88,7.59,0.21,0.26,Full Training,Backward
+19/3/2026,Henry,5573.02,802.92,347.69,56.93,7.03,0.25,0.21,Full Training,Backward
+19/3/2026,H.Grant,6153.52,1078.35,518.59,62.86,7.48,0.22,0.31,Full Training,Backward
+19/3/2026,Prass,6708.55,1420.03,775.85,68.52,8.62,0.26,0.25,Full Training,Backward
+19/3/2026,D.Fraser,4050,337.88,11.58,43.78,5.4,0.05,0.1,Full Training,Forward
+19/3/2026,Guido,5856.83,1003.68,516.82,59.82,7.63,0.3,0.29,Full Training,Backward
+19/3/2026,Noah,4909.06,449.96,220.92,50.14,6.78,0.06,0.15,Full Training,Forward
+19/3/2026,Remi,4632.3,1046,145.73,47.32,6.8,0.09,0.14,Full Training,Forward
+19/3/2026,Kaelan,5957.26,1490.61,510.52,60.85,8.12,0.1,0.19,Full Training,Backward
+19/3/2026,Della,6248.52,1060.25,513.55,63.83,7.4,0.21,0.23,Full Training,Backward
+19/3/2026,B.Hemps,3513.73,799.63,172.41,35.89,6.6,0.06,0.06,Full Training,Forward
+21/3/2026,G.Urquhart,2392.48,446.12,178.91,51.29,6.74,0.06,0.07,Game 1st Half,Backward
+21/3/2026,Della,3183.1,583.94,240.32,68.23,7.45,0.08,0.26,Game 1st Half,Backward
+21/3/2026,Athen,3894.28,1545.26,564.96,83.48,8.14,0.14,0.24,Game 1st Half,Backward
+21/3/2026,W.Wilson,3237.73,643.78,181.6,69.4,6.81,0.07,0.2,Game 1st Half,Forward
+21/3/2026,George,2264.02,141.73,23.51,48.53,5.42,0.01,0.03,Game 1st Half,Forward
+21/3/2026,Kaelan,3390.73,1235.18,451.28,72.68,8.26,0.17,0.28,Game 1st Half,Backward
+21/3/2026,H.Grant,3334.33,645.48,323.61,71.48,7.41,0.2,0.33,Game 1st Half,Backward
+21/3/2026,Clifty,3155.24,1079.44,119.68,67.64,6.93,0.07,0.09,Game 1st Half,Forward
+21/3/2026,Prass,4256,985.68,524.75,91.23,7.9,0.11,0.14,Game 1st Half,Backward
+21/3/2026,D.Fraser,2004.14,155.45,18.36,42.96,6.21,0.02,0.06,Game 1st Half,Forward
+21/3/2026,Noah,3312.38,591.17,169.39,71,7.11,0.09,0.21,Game 1st Half,Forward
+21/3/2026,Henry,3228.01,569.35,222.28,69.2,7.08,0.15,0.2,Game 1st Half,Backward
+21/3/2026,G.Urquhart,3833.1,992.24,403.43,88.66,7.36,0.06,0.13,Game 2nd Half,Backward
+21/3/2026,Della,3245.5,623.3,328.02,75.07,7.86,0.08,0.22,Game 2nd Half,Backward
+21/3/2026,Athen,3531.48,1309.52,440.93,81.68,8.42,0.14,0.24,Game 2nd Half,Backward
+21/3/2026,W.Wilson,2994.78,361.18,136.11,69.27,6.91,0.02,0.13,Game 2nd Half,Forward
+21/3/2026,George,2256.15,90.01,8.59,52.19,5.55,0.01,0.07,Game 2nd Half,Forward
+21/3/2026,Kaelan,3406.39,1127.4,495.15,78.79,8.48,0.13,0.16,Game 2nd Half,Backward
+21/3/2026,H.Grant,1579.31,347.77,172.73,38.13,8.97,0.08,0.07,Game 2nd Half,Backward
+21/3/2026,Clifty,3083.24,1050.7,121.9,71.32,7.39,0.02,0.14,Game 2nd Half,Forward
+21/3/2026,Prass,3975.35,823.64,432.95,91.95,9,0.13,0.22,Game 2nd Half,Backward
+21/3/2026,D.Fraser,413.43,0,0,9.56,2.28,0,0,Game 2nd Half,Forward
+21/3/2026,Noah,2450.1,307.37,54.48,56.67,5.74,0.01,0.08,Game 2nd Half,Forward
+21/3/2026,Henry,3234.91,527.13,269.45,74.82,8.1,0.07,0.16,Game 2nd Half,Backward
+24/3/2026,Remi,3226.59,750.14,79.39,32.34,6.23,0.04,0.05,Full Training ,Backward
+24/3/2026,Leo,4990.3,603.5,308.03,55.48,8.76,0.12,0.16,Full Training ,Forward
+24/3/2026,H.Grant,6244.18,1055.43,408.45,62.59,7.01,0.28,0.25,Full Training ,Backward
+24/3/2026,D.Fraser,4968.52,370.59,40.27,49.8,5.53,0.03,0.05,Full Training ,Forward
+24/3/2026,Clifty,5748.76,1581.23,277.16,57.62,7.73,0.14,0.14,Full Training ,Forward
+24/3/2026,Athen,7011.38,2297.02,715.67,70.28,8.27,0.12,0.19,Full Training ,Backward
+24/3/2026,W.Wilson,5503.07,483.44,98.64,55.16,5.84,0.11,0.15,Full Training ,Forward
+24/3/2026,G.Urquhart,6246.75,1260.9,569.5,62.61,7.16,0.21,0.19,Full Training ,Backward
+24/3/2026,Henry,6256.67,1014.09,472.68,62.71,7.42,0.23,0.19,Full Training ,Backward
+24/3/2026,Tieli,4726.16,777.55,18.92,52.56,5.67,0.03,0.11,Full Training ,Forward
+24/3/2026,George,5327.43,154.32,12.65,53.4,5.56,0.03,0.03,Full Training ,Forward
+24/3/2026,Prass,7063.15,1537.86,839.32,70.8,7.98,0.27,0.24,Full Training ,Backward
+24/3/2026,Noah,6590.76,711.84,265.26,66.06,6.56,0.08,0.13,Full Training ,Forward
+24/3/2026,Della,6104.59,969.74,450.88,61.19,7.16,0.12,0.21,Full Training ,Backward
+24/3/2026,Jeremiah,4146.18,606.25,44.72,41.56,5.96,0.05,0.09,Full Training ,Forward
+24/3/2026,Kaelan,7012.22,2425.66,826.43,70.29,8.54,0.23,0.18,Full Training ,Backward
+24/3/2026,B.Hemps,4839.07,1225.69,240.54,48.5,7.28,0.11,0.1,Full Training ,Forward
+26/3/2026,Henry,5511.31,947.23,474.18,62.83,6.99,0.24,0.26,Full Training ,Backward
+26/3/2026,H.Grant,5653.44,900.79,438.06,64.44,7.4,0.17,0.15,Full Training ,Backward
+26/3/2026,Kaelan,6084.3,1750.32,737.79,69.35,8.54,0.26,0.29,Full Training ,Backward
+26/3/2026,Prass,6431.84,1370.24,622.27,73.31,7.86,0.2,0.17,Full Training ,Backward
+26/3/2026,Athen,6160.31,1818.17,714.06,70.22,8.65,0.22,0.11,Full Training ,Backward
+26/3/2026,Della,5822.24,1143.3,651.33,66.38,7.12,0.18,0.13,Full Training ,Backward
+26/3/2026,George,2305.67,32.74,1.02,52.03,4.85,0.01,0.05,Full Training ,Forward
+26/3/2026,W.Wilson,4805.68,476.41,94.02,54.79,5.73,0.09,0.13,Full Training ,Forward
+26/3/2026,D.Fraser,4764.66,358.63,60.84,54.31,5.97,0.05,0.1,Full Training ,Forward
+26/3/2026,B.Hemps,2697.51,465.81,49.61,30.75,6.53,0.05,0.05,Full Training ,Forward
+26/3/2026,Noah,5648.76,730.56,225.69,64.39,6.24,0.14,0.1,Full Training ,Forward
+26/3/2026,Clifty,5076.77,1386.88,268.63,57.88,7.07,0.14,0.18,Full Training ,Forward
+26/3/2026,Remi,4083.64,1022.89,135.15,57.88,6.18,0.13,0.2,Full Training ,Forward
+26/3/2026,Leo,4877.73,804.04,433.44,55.6,8.43,0.23,0.2,Full Training ,Forward
+26/3/2026,G.Urquhart,5935.63,1259.27,634.82,67.66,7.42,0.32,0.17,Full Training ,Backward
+28/3/2026,Henry,3235.31,608.26,213.43,75.83,7.34,0.12,0.21,Game 1st Half,Backward
+28/3/2026,D.Fraser,2768.95,228.65,45.87,64.9,5.38,0.05,0.17,Game 1st Half,Forward
+28/3/2026,Della,3072.71,638.88,264.44,72.02,7.26,0.14,0.33,Game 1st Half,Backward
+28/3/2026,Kaelan,3437.75,1256.13,496.95,80.57,9.21,0.19,0.33,Game 1st Half,Backward
+28/3/2026,W.Wilson,2913.48,378.08,82.14,68.28,5.82,0.17,0.24,Game 1st Half,Forward
+28/3/2026,Leo,3213.35,673.69,237.92,75.31,8.13,0.14,0.31,Game 1st Half,Forward
+28/3/2026,George,2701.41,637.45,33.4,63.31,5.65,0,0.17,Game 1st Half,Forward
+28/3/2026,Athen,3537.6,1466.77,546.02,82.91,8.38,0.19,0.26,Game 1st Half,Backward
+28/3/2026,Prass,3925.28,835.17,411.34,92,7.93,0.21,0.31,Game 1st Half,Backward
+28/3/2026,G.Urquhart,3476.26,753.68,299.82,81.47,7.58,0.29,0.29,Game 1st Half,Backward
+28/3/2026,Tieli,449.8,42.18,13.36,10.54,5.51,0,0,Game 1st Half,Forward
+28/3/2026,Noah,3288.33,493.1,84.45,77.07,5.78,0.07,0.17,Game 1st Half,Forward
+28/3/2026,H.Grant,3433.31,780.76,328.92,80.47,7.66,0.29,0.31,Game 1st Half,Backward
+28/3/2026,Henry,3127.57,546.7,248.05,71.08,8.71,0.23,0.51,Game 2nd Half,Backward
+28/3/2026,D.Fraser,2244.87,55.25,1.05,51.02,4.98,0.05,0.12,Game 2nd Half,Forward
+28/3/2026,Della,3268.93,444.04,137.38,74.29,6.55,0.14,0.28,Game 2nd Half,Backward
+28/3/2026,Kaelan,3608.99,1427.41,549.93,82.02,9.18,0.19,0.44,Game 2nd Half,Backward
+28/3/2026,W.Wilson,2871.71,284.99,142.79,65.27,6.83,0.19,0.3,Game 2nd Half,Forward
+28/3/2026,Leo,3042.38,528.27,90.42,69.14,6.6,0.09,0.42,Game 2nd Half,Forward
+28/3/2026,George,2794.85,654.32,27.63,63.52,6.2,0.09,0.19,Game 2nd Half,Forward
+28/3/2026,Athen,3659.59,1443.35,603.43,83.17,8.66,0.26,0.28,Game 2nd Half,Backward
+28/3/2026,Prass,4249.25,962.18,510.47,96.57,8.04,0.35,0.3,Game 2nd Half,Backward
+28/3/2026,G.Urquhart,1300.54,205.9,67.7,29.56,5.78,0.02,0.19,Game 2nd Half,Backward
+28/3/2026,Tieli,2361.51,83.61,11.54,53.67,5.35,0,0.09,Game 2nd Half,Forward
+28/3/2026,Noah,3052.86,293.1,62.15,69.38,5.92,0.09,0.23,Game 2nd Half,Forward
+28/3/2026,H.Grant,2633.33,548.06,291.74,59.85,8.58,0.19,0.21,Game 2nd Half,Backward
+31/3/2026,Noah,7212.75,1187.39,189.32,71.05,6.62,0.1,0.09,Full Training ,Forward
+31/3/2026,Kaelan,8043.41,3230.51,993.11,79.23,9.75,0.34,0.28,Full Training ,Backward
+31/3/2026,Henry,7541.7,1866.28,775.07,74.29,7,0.12,0.32,Full Training ,Backward
+31/3/2026,G.Urquhart,8247.09,2160.13,1040.37,81.24,7.91,0.51,0.42,Full Training ,Backward
+31/3/2026,Athen,8322.13,3338.03,1138.23,81.98,7.96,0.39,0.47,Full Training ,Backward
+31/3/2026,Della*,4774.9,501.66,169.72,47.77,6.62,0.02,0.03,Full Training ,Backward
+31/3/2026,Clifty,7285.73,2899.87,484.06,71.77,7.58,0.19,0.2,Full Training ,Forward
+31/3/2026,Prass,8503.99,2365.01,978.29,83.77,8.39,0.48,0.37,Full Training ,Backward
+31/3/2026,H.Grant*,5406.96,1456.12,590.78,53.26,6.82,0.09,0.19,Full Training ,Backward
+31/3/2026,Leo,6978.51,1748.33,705.64,68.74,8.44,0.32,0.31,Full Training ,Forward
+31/3/2026,Remi,6636.42,2294.75,296.13,65.37,8.26,0.11,0.17,Full Training ,Forward
+7/4/2026,George,4538.49,231.26,9.34,42.51,5.02,0.04,0.08,Full Training ,Forward
+7/4/2026,Leo,6437.75,970.2,367.64,60.3,7.3,0.16,0.18,Full Training ,Forward
+7/4/2026,Clifty,6085.55,1778.62,343.59,57,6.86,0.13,0.24,Full Training ,Forward
+7/4/2026,W.Wilson,6562.19,728.25,170.99,61.46,6.06,0.08,0.14,Full Training ,Forward
+7/4/2026,Fus,6101.09,1644.57,433.13,61.75,7.65,0.1,0.15,Full Training ,Backward
+7/4/2026,Prass,7928.32,1905.85,878.3,74.26,8.24,0.32,0.42,Full Training ,Backward
+7/4/2026,Tieli,3981.73,593.99,35.89,40.81,6.01,0.01,0.06,Full Training ,Forward
+7/4/2026,Noah,6056.69,663.92,217.53,56.73,6.72,0.07,0.06,Full Training ,Forward
+7/4/2026,D.Fraser,4858.94,452.36,129.91,48.96,7.21,0.09,0.09,Full Training ,Forward
+7/4/2026,Della,6922.29,1291.39,677.04,64.84,7.81,0.12,0.3,Full Training ,Backward
+7/4/2026,H.Grant,5156.52,881.21,388.37,48.3,7.35,0.12,0.23,Full Training ,Backward
+7/4/2026,Remi,5760.89,1499.96,287.5,53.96,7.91,0.08,0.17,Full Training ,Forward
+7/4/2026,Kaelan,7154.19,2297.89,772.58,67.01,8.85,0.16,0.27,Full Training ,Backward
+7/4/2026,Henry,6740.52,1175.55,476.68,63.13,7.39,0.15,0.18,Full Training ,Backward
+7/4/2026,G.Urquhart,6159.88,1222.92,518.63,57.69,7.74,0.25,0.26,Full Training ,Backward
+7/4/2026,Athen,6965.61,2112.38,788.13,65.24,8.57,0.16,0.31,Full Training ,Backward
+9/4/2026,H.Grant,4789.65,820.96,347.74,62.04,6.9,0.25,0.16,Full Training ,Backward
+9/4/2026,Kaelan,5545.06,1629.69,656.54,71.83,9.28,0.21,0.22,Full Training ,Backward
+9/4/2026,G.Urquhart,6068.84,1226.79,615.63,78.61,7.64,0.29,0.31,Full Training ,Backward
+9/4/2026,Henry,5244.17,900.17,359.86,67.93,7.36,0.16,0.16,Full Training ,Backward
+9/4/2026,Athen,5447.64,1742.38,745.1,70.57,8.24,0.32,0.26,Full Training ,Backward
+9/4/2026,Noah,4601.73,595.29,174.88,59.61,6.14,0.04,0.13,Full Training ,Forward
+9/4/2026,Prass,5794.38,1325.89,700.07,75.06,8.59,0.36,0.31,Full Training ,Backward
+9/4/2026,Leo,4736.74,659.82,272.6,61.36,7.27,0.14,0.12,Full Training ,Forward
+9/4/2026,Remi,4327.89,1059.06,186.83,56.06,6.27,0.09,0.18,Full Training ,Forward
+9/4/2026,Fus,4981.36,1228.03,400.4,64.53,7.15,0.09,0.18,Full Training ,Backward
+9/4/2026,D.Fraser,3926,365.03,91.77,50.85,5.8,0.01,0.05,Full Training ,Forward
+9/4/2026,Della,5558.85,1030.94,603.54,72.01,7.63,0.19,0.26,Full Training ,Backward
+9/4/2026,W.Wilson,4268.99,542.98,122.57,55.3,7.17,0.05,0.12,Full Training ,Forward
+9/4/2026,Clifty,4785.68,1375.7,267.95,61.99,6.72,0.19,0.29,Full Training ,Forward
+9/4/2026,B.Hemps,5166.91,1513.9,330.34,66.93,6.68,0.1,0.34,Full Training ,Forward
+11/4/2026,Noah,3395.72,388.5,114.56,72.92,6.48,0.11,0.22,Game 1st Half,Forward
+11/4/2026,G.Urquhart,4061.22,1138.54,476.95,87.21,8.52,0.35,0.43,Game 1st Half,Backward
+11/4/2026,Tieli,2131.99,326.4,19.75,59.3,6.04,0,0.07,Game 1st Half,Forward
+11/4/2026,Kaelan,3632.69,1315.84,617.04,78.01,8.33,0.24,0.35,Game 1st Half,Backward
+11/4/2026,Della,3579.58,670.58,399.28,76.87,7.49,0.22,0.37,Game 1st Half,Backward
+11/4/2026,Prass,3954.75,851.28,390.76,84.93,8.25,0.3,0.35,Game 1st Half,Backward
+11/4/2026,B.Hemps,3240.55,1137.1,195.47,69.59,6.57,0.2,0.33,Game 1st Half,Forward
+11/4/2026,D.Fraser,2897.54,151.17,21.15,62.22,5.39,0,0.17,Game 1st Half,Forward
+11/4/2026,Clifty,3117.85,1131.33,156.16,66.95,6.56,0.09,0.37,Game 1st Half,Forward
+11/4/2026,W.Wilson,3009.01,339.95,96.77,64.62,7.03,0.24,0.41,Game 1st Half,Forward
+11/4/2026,Fus,3085.43,765,159.3,66.26,7.22,0.15,0.15,Game 1st Half,Backward
+11/4/2026,Remi,345.39,55.79,24.63,8.36,5.44,0,0,Game 1st Half,Backward
+11/4/2026,Leo,462.96,44.06,15.35,11.27,5.72,0,0,Game 1st Half,Backward
+11/4/2026,Henry,3448.1,700.31,358.13,74.05,8.92,0.11,0.13,Game 1st Half,Backward
+11/4/2026,Noah,1124.96,14.44,0,24.32,4.23,0,0.04,Game 2nd Half,Forward
+11/4/2026,G.Urquhart,1362.57,196,70.31,48.26,6.35,0.11,0.15,Game 2nd Half,Backward
+11/4/2026,Tieli,,,,,,,,Game 2nd Half,Forward
+11/4/2026,Kaelan,3375.36,1038.94,412.85,72.98,8.47,0.35,0.24,Game 2nd Half,Backward
+11/4/2026,Della,3494.8,661.82,259.03,75.56,7.8,0.15,0.33,Game 2nd Half,Backward
+11/4/2026,Prass,3706.43,673.4,347.29,80.14,9.18,0.33,0.33,Game 2nd Half,Backward
+11/4/2026,B.Hemps,3105.62,827.94,241.59,67.15,8.32,0.11,0.26,Game 2nd Half,Forward
+11/4/2026,D.Fraser,1831.14,39.35,0,39.59,4.75,0,0.04,Game 2nd Half,Forward
+11/4/2026,Clifty,1661.51,397.8,36.74,35.92,6.55,0.07,0.15,Game 2nd Half,Forward
+11/4/2026,W.Wilson,2946.42,286.91,40.59,63.71,5.83,0.11,0.24,Game 2nd Half,Forward
+11/4/2026,Fus,2519.61,562.55,144.44,54.48,7.28,0.11,0.13,Game 2nd Half,Backward
+11/4/2026,Remi,1924.38,438.66,82.94,41.61,7.33,0.07,0.17,Game 2nd Half,Backward
+11/4/2026,Leo,2053.23,407.26,173.38,44.39,7.92,0.09,0.24,Game 2nd Half,Backward
+11/4/2026,Henry,3127.09,632.82,374.7,67.61,8.94,0.13,0.28,Game 2nd Half,Backward
+14/4/2026,Clifty,7163.38,3155.27,537.99,76.59,7.22,0.17,0.15,Full Training ,Forward
+14/4/2026,W.Wilson,6584.2,1497.08,388.15,70.41,5.95,0.04,0.16,Full Training ,Forward
+14/4/2026,Athen,8423.86,3861.51,1458.97,90.08,8.58,0.31,0.42,Full Training ,Backward
+14/4/2026,Noah,7824.37,1904.34,491.52,83.65,7.04,0.18,0.13,Full Training ,Forward
+14/4/2026,Della*,1795.61,256.85,130.86,42.75,7.4,0.01,0.05,Full Training ,Backward
+14/4/2026,Tieli,5979.14,1481.68,43.38,68.06,5.77,0,0.04,Full Training ,Forward
+14/4/2026,Leo,7168.17,1660.57,514.46,76.65,8.57,0.19,0.23,Full Training ,Backward
+14/4/2026,Prass,8540.04,2820.63,1297.4,91.32,8.13,0.31,0.32,Full Training ,Backward
+14/4/2026,Henry,7490.48,2286.19,773.78,80.08,7.01,0.16,0.19,Full Training ,Backward
+14/4/2026,B.Hemps,7407.78,3115.2,429.71,79.21,7.64,0.19,0.23,Full Training ,Forward
+14/4/2026,H.Grant,7765.69,2407.37,1214.13,83.03,7.74,0.26,0.37,Full Training ,Backward
+21/4/2026,Clifty,5440.99,1478.45,207.43,61.15,6.49,0.1,0.2,Full Training ,Forward
+21/4/2026,Della,6761.27,1799.11,967.39,75.98,7.97,0.23,0.16,Full Training ,Backward
+21/4/2026,Athen,5116.91,1554.86,486.44,57.5,7.91,0.09,0.17,Full Training ,Backward
+21/4/2026,Kaelan,5950.91,1540.15,465.27,66.88,8.81,0.15,0.25,Full Training ,Backward
+21/4/2026,Noah,5061.41,532.41,121.05,56.88,5.98,0.11,0.03,Full Training ,Forward
+21/4/2026,Prass,6274.32,1115.33,493.78,70.51,8.54,0.2,0.24,Full Training ,Backward
+21/4/2026,B.Hemps,5575.79,1536.24,383.37,62.66,7.73,0.15,0.31,Full Training ,Forward
+21/4/2026,D.Fraser,4812.64,441.22,141.68,60.38,6.16,0.05,0.07,Full Training ,Forward
+21/4/2026,G.Urquhart,6391.14,1209.2,520.54,71.82,6.93,0.28,0.27,Full Training ,Backward
+21/4/2026,Remi,5083.89,1128.77,172.18,57.13,7.4,0.11,0.22,Full Training ,Backward
+21/4/2026,George,5147.19,163.96,1.51,57.84,4.91,0.01,0,Full Training ,Backward
+21/4/2026,Fus,4740.62,1047.52,198.29,60.44,7.79,0.08,0.09,Full Training ,Backward
+21/4/2026,H.Grant,5257.14,733.45,319.07,59.08,8.19,0.18,0.19,Full Training ,Backward
+21/4/2026,W.Wilson,5257.91,456.77,97.1,59.09,5.77,0.1,0.1,Full Training ,Backward
+21/4/2026,Leo,4930.01,591.1,292.67,55.4,7.91,0.14,0.16,Full Training ,Backward
+23/5/2026,Prass,5539.61,1267.02,650.37,76.8,8.5,0.31,0.19,Full Training ,Backward
+23/5/2026,Clifty,4187.59,1393.8,214.85,58.05,6.9,0.06,0.13,Full Training ,Forward
+23/5/2026,George,2771.56,258.25,25.53,38.42,5.76,0.05,0.08,Full Training ,Forward
+23/5/2026,Noah,3993.44,553.01,258.01,55.36,6.59,0.13,0.14,Full Training ,Forward
+23/5/2026,G.Urquhart,5687.85,1263.5,663.39,78.85,8.02,0.27,0.23,Full Training ,Backward
+23/5/2026,D.Fraser,3637.07,337.9,115.82,52.33,6.74,0,0.04,Full Training ,Forward
+23/5/2026,Della,5107.1,1136.69,665.87,70.8,8.14,0.18,0.21,Full Training ,Backward
+23/5/2026,W.Wilson,4396.69,690.35,149.77,60.95,6.38,0.06,0.08,Full Training ,Forward
+23/5/2026,Athen,5127.28,1706.46,726.46,71.08,7.93,0.17,0.29,Full Training ,Backward
+23/5/2026,H.Grant,4499.58,778.73,343.7,62.38,7.2,0.12,0.19,Full Training ,Backward
+23/5/2026,B.Hemps,4674.17,1532.29,413.71,64.8,7.24,0.18,0.19,Full Training ,Forward
+23/5/2026,Remi,4033.77,1086.46,186.86,55.92,6.61,0.09,0.22,Full Training ,Forward
+23/5/2026,Leo,3886.58,582.36,205.67,53.88,6.56,0.12,0.12,Full Training ,Forward
+23/5/2026,Henry,4899.16,1067.9,536.01,67.92,7.21,0.31,0.21,Full Training ,Backward
+23/5/2026,Kaelan,5391.54,1758.13,806.36,74.74,8.67,0.17,0.19,Full Training ,Backward
+25/4/2026,D.Fraser,3185.01,265.2,69.25,74.21,6.09,0.09,0.3,Game 1st Half,Forward
+25/4/2026,G.Urquhart,4033.08,1162.59,578.39,93.97,7.16,0.35,0.4,Game 1st Half,Backward
+25/4/2026,H.Grant,325.73,34.1,0.5,9.82,4.95,0,0,Game 1st Half,Backward
+25/4/2026,Leo,423.92,48.85,30.57,10.85,5.61,0.05,0,Game 1st Half,Backward
+25/4/2026,Della,3746.54,920.7,488.88,87.3,8.11,0.12,0.33,Game 1st Half,Backward
+25/4/2026,George,395.12,6.53,0,9.21,4.56,0,0,Game 1st Half,Backward
+25/4/2026,Kaelan,3455.65,1245.43,495.4,80.52,9.59,0.12,0.42,Game 1st Half,Backward
+25/4/2026,Noah,286.54,1.21,0,7.73,3.98,0,0,Game 1st Half,Backward
+25/4/2026,B.Hemps,3509.18,1198.59,263.62,81.77,6.6,0.21,0.23,Game 1st Half,Forward
+25/4/2026,Henry,3422.05,761.03,398.89,79.74,7.51,0.21,0.26,Game 1st Half,Backward
+25/4/2026,Tieli,2695.44,1010.43,97.88,61.01,5.87,0.16,0.16,Game 1st Half,Forward
+25/4/2026,Prass,3920.37,806.06,379.1,91.35,8.89,0.33,0.28,Game 1st Half,Backward
+25/4/2026,Athen,3452.39,1389.61,501.06,80.44,9.64,0.14,0.42,Game 1st Half,Backward
+25/4/2026,W.Wilson,3181.26,306.34,60.02,74.13,5.93,0.12,0.21,Game 1st Half,Forward
+25/4/2026,D.Fraser,1891.3,93.71,28.27,44.12,5.51,0.02,0.21,Game 2nd Half,Forward
+25/4/2026,G.Urquhart,1548.6,292.08,108.79,36.21,6.71,0.07,0.16,Game 2nd Half,Backward
+25/4/2026,H.Grant,746.46,67.72,19.64,17.27,5.74,0,0,Game 2nd Half,Backward
+25/4/2026,Leo,2068.11,366.09,199.19,46.81,7.97,0.05,0.14,Game 2nd Half,Backward
+25/4/2026,Della,3518.78,776.01,388.47,79.64,8.6,0.16,0.26,Game 2nd Half,Backward
+25/4/2026,George,2496.1,114.15,24.16,56.49,6,0.05,0.19,Game 2nd Half,Backward
+25/4/2026,Kaelan,3736.8,1524.22,625.12,84.57,9.36,0.3,0.53,Game 2nd Half,Backward
+25/4/2026,Noah,767.33,67.08,45.12,17.37,6.93,0.02,0.02,Game 2nd Half,Backward
+25/4/2026,B.Hemps,3319.6,975.78,198.66,75.13,7.32,0.35,0.37,Game 2nd Half,Forward
+25/4/2026,Henry,3368.46,744.95,410.89,76.24,8.89,0.16,0.33,Game 2nd Half,Backward
+25/4/2026,Tieli,396.58,56.9,20.93,9.24,5.75,0,0,Game 2nd Half,Forward
+25/4/2026,Prass,3994.99,793.83,350.71,90.42,8.32,0.33,0.26,Game 2nd Half,Backward
+25/4/2026,Athen,3551,1358.99,514.15,80.37,8.91,0.26,0.33,Game 2nd Half,Backward
+25/4/2026,W.Wilson,2943.33,311.22,103.47,66.62,6.93,0.19,0.21,Game 2nd Half,Forward
+28/4/2026,Prass,6411.66,1490.35,787.88,64.56,8.52,0.26,0.38,Full Training ,Backward
+28/4/2026,Della,5963.65,1100.6,665,59.71,7.8,0.14,0.21,Full Training ,Backward
+28/4/2026,Tieli,4296.28,612.9,38.25,42.86,5.64,0.05,0.04,Full Training ,Forward
+28/4/2026,Henry,5684.33,936.62,341.53,57.3,6.7,0.2,0.21,Full Training ,Backward
+28/4/2026,George,4052.94,297.79,78.15,40.46,5.87,0.02,0.05,Full Training ,Forward
+28/4/2026,Athen,6161.81,2048.93,839.98,61.84,8.45,0.27,0.4,Full Training ,Backward
+28/4/2026,H.Grant,5567.9,896.84,345.6,57.17,8.81,0.16,0.17,Full Training ,Backward
+28/4/2026,Kaelan,5825.56,1585.54,582.58,58.84,8.78,0.12,0.12,Full Training ,Backward
+28/4/2026,G.Urquhart,5208.6,870.75,374.83,52.79,7.14,0.19,0.16,Full Training ,Backward
+28/4/2026,Noah,5487.3,625.35,220.52,56.33,6.41,0.11,0.12,Full Training ,Forward
+28/4/2026,W.Wilson,4889.18,626.24,195.77,48.81,6.18,0.02,0.07,Full Training ,Forward
+28/4/2026,Remi,4853.38,1356.79,207.28,53.67,7.1,0.04,0.11,Full Training ,Forward
+28/4/2026,Clifty,5405.59,1586.71,288.23,53.93,6.94,0.19,0.14,Full Training ,Forward
+28/4/2026,B.Hemps,5060.21,1153.75,100.81,50.48,6.04,0.1,0.09,Full Training ,Forward
+28/4/2026,D.Fraser,4932.14,450.8,107.14,49.21,6.33,0,0.06,Full Training ,Forward
+30/4/2026,Tieli,5123.73,1421.42,525.84,66.16,8.29,0.24,0.29,Full Training ,Forward
+30/4/2026,George,3307.53,335.59,78.8,42.71,5.62,0.12,0.03,Full Training ,Forward
+30/4/2026,Prass,5550.14,1148.86,495.85,71.66,7.94,0.39,0.25,Full Training ,Backward
+30/4/2026,H.Grant,4289.39,802.47,387.39,55.38,7.38,0.38,0.23,Full Training ,Backward
+30/4/2026,Noah,4150.29,525.96,217.48,53.59,6.57,0.11,0.17,Full Training ,Forward
+30/4/2026,Clifty,4403.35,1050.61,298.67,56.85,7.11,0.18,0.22,Full Training ,Forward
+30/4/2026,D.Fraser,4244.35,396.65,155.99,54.8,6.38,0.05,0.03,Full Training ,Forward
+30/4/2026,Athen,5430.15,1769.11,739.55,70.11,8.08,0.26,0.35,Full Training ,Backward
+30/4/2026,W.Wilson,4568.92,514.67,144.01,58.99,6.36,0.11,0.01,Full Training ,Forward
+30/4/2026,Della,5051.18,923.19,474.1,65.22,7.31,0.24,0.23,Full Training ,Backward
+30/4/2026,Henry,5202.19,944.01,447.74,67.17,8.27,0.23,0.26,Full Training ,Backward
+30/4/2026,Leo,4039.16,587.59,303.41,52.15,7.77,0.08,0.12,Full Training ,Backward
+30/4/2026,G.Urquhart,4707.4,876.94,407.43,60.78,7.69,0.27,0.21,Full Training ,Backward
+2/5/2026,Noah,455.77,16.5,0,10.83,4.21,0,0,Game 1st Half,Backward
+2/5/2026,G.Urquhart,4277.14,1251.98,534.01,93.02,8.32,0.42,0.4,Game 1st Half,Backward
+2/5/2026,D.Fraser,3163.47,249.52,72.01,68.8,6.81,0.16,0.24,Game 1st Half,Forward
+2/5/2026,W.Wilson,3257.64,386.88,121,70.84,6.07,0.13,0.24,Game 1st Half,Forward
+2/5/2026,Henry,3717.12,878.07,479.61,80.84,8.14,0.29,0.38,Game 1st Half,Backward
+2/5/2026,Leo,320.56,23.19,0.51,8.82,4.86,0,0,Game 1st Half,Backward
+2/5/2026,Athen,3818.7,1566.9,695.1,83.05,9.28,0.2,0.56,Game 1st Half,Backward
+2/5/2026,H.Grant,331.5,16.52,0,8.59,4.72,0,0,Game 1st Half,Backward
+2/5/2026,Kaelan,3800.11,1508.99,560.43,82.64,8.69,0.36,0.36,Game 1st Half,Backward
+2/5/2026,George,311.52,14.7,0,6.85,4.54,0,0,Game 1st Half,Backward
+2/5/2026,B.Hemps,3405.88,1152.79,291.62,74.07,7.98,0.24,0.27,Game 1st Half,Forward
+2/5/2026,Clifty,434.3,57.91,16.5,9.44,5.54,0,0,Game 1st Half,Backward
+2/5/2026,Della,3691.57,719.85,454.05,80.28,8.34,0.18,0.4,Game 1st Half,Backward
+2/5/2026,Prass,3939.36,763.94,362.38,85.67,8.13,0.33,0.33,Game 1st Half,Backward
+2/5/2026,Noah,576.8,22.7,0,12.97,4.7,0,0,Game 2nd Half,Backward
+2/5/2026,G.Urquhart,1623.36,338.61,150.88,36.51,6.2,0.2,0.18,Game 2nd Half,Backward
+2/5/2026,D.Fraser,2655.29,203.27,48.14,59.71,6.57,0.04,0.18,Game 2nd Half,Forward
+2/5/2026,W.Wilson,2612.42,304.43,91.23,58.75,6.38,0.07,0.13,Game 2nd Half,Forward
+2/5/2026,Henry,3071.9,644.36,339.09,69.08,7.38,0.22,0.33,Game 2nd Half,Backward
+2/5/2026,Leo,1747.45,308.09,124.86,39.3,6.84,0.11,0.13,Game 2nd Half,Backward
+2/5/2026,Athen,3351.02,1327.25,544.19,75.39,8.54,0.18,0.36,Game 2nd Half,Backward
+2/5/2026,H.Grant,523.67,49.16,15.27,11.78,5.51,0,0,Game 2nd Half,Backward
+2/5/2026,Kaelan,3239.98,1151.2,350.05,72.86,8.32,0.22,0.27,Game 2nd Half,Backward
+2/5/2026,George,2235.23,196.05,28.77,50.27,5.57,0.11,0.27,Game 2nd Half,Backward
+2/5/2026,B.Hemps,2283.05,695.56,155.44,51.34,7.48,0.09,0.22,Game 2nd Half,Forward
+2/5/2026,Clifty,996.7,268.64,20.05,22.41,5.21,0.11,0.07,Game 2nd Half,Backward
+2/5/2026,Della,3222.67,632.08,353.06,72.5,7.6,0.09,0.33,Game 2nd Half,Backward
+2/5/2026,Prass,3720.08,822.46,464.91,83.66,7.9,0.31,0.18,Game 2nd Half,Backward

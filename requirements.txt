@@ -1,0 +1,7 @@
+dash
+pandas
+plotly
+numpy
+openpyxl
+dash-auth
+gunicorn
