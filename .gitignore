@@ -1,0 +1,6 @@
+credentials.json
+*.xlsx
+*.numbers
+*.csv
+~*
+.DS_Store
