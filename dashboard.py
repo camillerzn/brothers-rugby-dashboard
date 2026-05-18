@@ -1,25 +1,47 @@
-
 import pandas as pd
 import numpy as np
 from dash import Dash, dcc, html, Input, Output, dash_table
 import plotly.graph_objects as go
 import plotly.express as px
+import gspread
+from google.oauth2.service_account import Credentials
 import dash_auth
+import os   
 
 COULEURS = {
-    "bleu":   "#4A90D9",
-    "noir":   "#0A0A0A",
-    "blanc":  "#FFFFFF",
-    "fonce":  "#0D1B2A",
-    "gris":   "#4A4A6A",
+    "bleu":  "#4A90D9",
+    "noir":  "#0A0A0A",
+    "blanc": "#FFFFFF",
+    "fonce": "#0D1B2A",
+    "gris":  "#4A4A6A",
 }
 
-def load_data(file_csv):
-    df = pd.read_excel(file_csv, parse_dates=["date"])
+SCOPES = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+
+def load_data():
+    import json
+    creds_json = os.environ.get("GOOGLE_CREDENTIALS")
+    if creds_json:
+        creds_info = json.loads(creds_json)
+        creds = Credentials.from_service_account_info(creds_info, scopes=SCOPES)
+    else:
+        creds = Credentials.from_service_account_file(
+            os.path.join(os.path.dirname(__file__), "credentials.json"), scopes=SCOPES)
+    client = gspread.authorize(creds)
+    sheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1thDPDieTXxL7qlnvx5BtJShPZmoON4e6KCs8uALK1-0/edit?gid=0#gid=0")
+    worksheet = sheet.get_worksheet(0)
+    data = worksheet.get_all_records()
+    df = pd.DataFrame(data)
+    df["date"] = pd.to_datetime(df["date"], dayfirst=True)
     df = df.sort_values(["player", "date"]).reset_index(drop=True)
+    for col in ["TD", "HSR", "SD", "top_Speed", "accel_min", "decel_min"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
     return df
 
-df = load_data("/Users/admin/Desktop/Brothers Rugby/Brothers_GPS.xlsx")
+df = load_data()
 players = sorted(df["player"].unique())
 positions = sorted(df["position"].unique())
 session_types = sorted(df["type"].unique())
