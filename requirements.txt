@@ -5,3 +5,5 @@ numpy
 openpyxl
 dash-auth
 gunicorn
+gspread
+google-auth
