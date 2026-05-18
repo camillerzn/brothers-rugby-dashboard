@@ -6,7 +6,8 @@ import plotly.express as px
 import gspread
 from google.oauth2.service_account import Credentials
 import dash_auth
-import os   
+import os
+import json
 
 COULEURS = {
     "bleu":  "#4A90D9",
@@ -22,7 +23,6 @@ SCOPES = [
 ]
 
 def load_data():
-    import json
     creds_json = os.environ.get("GOOGLE_CREDENTIALS")
     if creds_json:
         creds_info = json.loads(creds_json)
@@ -47,6 +47,7 @@ positions = sorted(df["position"].unique())
 session_types = sorted(df["type"].unique())
 
 app = Dash(__name__, title="Brothers Rugby Dashboard")
+server = app.server
 
 VALID_USERS = {
     "admin": "brothers2026",
@@ -71,7 +72,8 @@ app.layout = html.Div(style={
     html.Div(style={
         "display": "flex",
         "gap": "24px",
-        "marginBottom": "24px"
+        "marginBottom": "24px",
+        "flexWrap": "wrap"
     }, children=[
 
         html.Div([
@@ -128,14 +130,14 @@ app.layout = html.Div(style={
         "marginBottom": "24px"
     }),
 
-html.Div(id="graphs", style={
+    html.Div(id="graphs", style={
         "display": "grid",
         "gridTemplateColumns": "1fr 1fr",
         "gap": "16px",
         "marginTop": "24px"
     }),
+
 ])
- # callback
 
 @app.callback(
     Output("kpis", "children"),
@@ -186,13 +188,14 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
             xaxis=dict(gridcolor=COULEURS["gris"]),
             yaxis=dict(gridcolor=COULEURS["gris"]),
             legend=dict(orientation="h", y=-0.2),
+            barmode="group",
         )
         return html.Div(style={
             "backgroundColor": COULEURS["fonce"],
             "borderRadius": "12px",
             "padding": "16px",
             "border": "1px solid " + COULEURS["gris"]
-        }, children=[dcc.Graph(figure=fig)])
+        }, children=[dcc.Graph(figure=fig, style={"height": "400px"})])
 
     td  = round(dff["TD"].mean(), 0) if len(dff) else 0
     hsr = round(dff["HSR"].mean(), 0) if len(dff) else 0
@@ -206,8 +209,8 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         kpi_card("HSR (m)", int(hsr), "#4ECDC4"),
         kpi_card("Sprint Distance (m)", int(sd), "#FFE66D"),
         kpi_card("Top Speed (m/s)", ts, "#FF6B35"),
-        kpi_card("Accel/min >4m/s²", am, "#C77DFF"),
-        kpi_card("Decel/min >4m/s²", dm, "#FF6B6B"),
+        kpi_card("Accel/min >4m/s2", am, "#C77DFF"),
+        kpi_card("Decel/min >4m/s2", dm, "#FF6B6B"),
     ]
 
     graphs = [
@@ -215,23 +218,11 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         make_graph("HSR", "HSR (m)", "#4ECDC4"),
         make_graph("SD", "Sprint Distance (m)", "#FFE66D"),
         make_graph("top_Speed", "Top Speed (m/s)", "#FF6B35"),
-        make_graph("accel_min", "Accel/min >4m/s²", "#C77DFF"),
-        make_graph("decel_min", "Decel/min >4m/s²", "#FF6B6B"),
+        make_graph("accel_min", "Accel/min >4m/s2", "#C77DFF"),
+        make_graph("decel_min", "Decel/min >4m/s2", "#FF6B6B"),
     ]
 
     return kpis, graphs
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
-#     def calculate_acwr(df, load_col="player_load", acute_window=7, chronic_window=28):
-#     results = []
-#     for player, group in df.groupby("player"):
-#         group = group.set_index("date").resample("D")[load_col].sum().reset_index()
-#         group["acute_load"] = group[load_col].rolling(acute_window, min_periods=1).mean()
-#         group["chronic_load"] = group[load_col].rolling(chronic_window, min_periods=1).mean()
-#         group["acwr"] = group["acute_load"] / group["chronic_load"].replace(0, np.nan)
-#         group["player"] = player
-#         results.append(group)
-#     return pd.concat(results, ignore_index=True)
