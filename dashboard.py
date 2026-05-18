@@ -60,7 +60,9 @@ app.layout = html.Div(style={
     "minHeight": "100vh",
     "fontFamily": "sans-serif",
     "color": COULEURS["blanc"],
-    "padding": "24px"
+    "padding": "24px",
+    "maxWidth": "1400px",
+    "margin": "0 auto"
 }, children=[
 
     html.H1("Brothers Rugby Dashboard", style={
