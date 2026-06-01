@@ -520,17 +520,17 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         last_date = dp["date"].max()
         dp_last = dp[dp["date"] == last_date]
 
-        rows = ""
-        for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
+    rows = ""
+    for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
                             ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
-            last_val  = round(dp_last[col].mean(), 1) if not dp_last.empty else "-"
-            perso_avg = round(dp[col].mean(), 1) if not dp.empty else "-"
-            arrow = trend_arrow(last_val, perso_avg)
+            session_val = round(dp[col].mean(), 1) if not dp.empty else "-"
+            perso_avg   = round(df[df["player"] == player][col].mean(), 1)
+            arrow = trend_arrow(session_val, perso_avg)
             rows += f"""
             <tr>
                 <td>{label}</td>
-                <td>{last_val}</td>
+                <td>{session_val}</td>
                 <td>{perso_avg}</td>
                 <td>{arrow}</td>
             </tr>"""
@@ -546,8 +546,8 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <thead>
                     <tr>
                         <th>Metric</th>
-                        <th>Last session</th>
-                        <th>Personal avg</th>
+                        <th>Session avg</th>
+                        <th>Personal avg (all time)</th>
                         <th>Trend</th>
                     </tr>
                 </thead>
