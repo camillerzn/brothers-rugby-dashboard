@@ -224,6 +224,7 @@ app.layout = html.Div(style={
     }),
 ])
 
+
 @app.callback(
     Output("kpis-acwr", "children"),
     Output("kpis", "children"),
@@ -467,6 +468,17 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         else:
             return "Overload"
 
+    def trend_arrow(val, ref):
+        if val == "-" or ref == "-" or ref == 0:
+            return "-"
+        pct = round((val - ref) / ref * 100, 1)
+        if pct >= 5:
+            return f'<span style="color:#2e7d32; font-weight:700">▲ {pct:+.1f}%</span>'
+        elif pct <= -5:
+            return f'<span style="color:#c62828; font-weight:700">▼ {pct:+.1f}%</span>'
+        else:
+            return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
+
     td_r, td_c   = acwr_val("TD")
     hsr_r, hsr_c = acwr_val("HSR")
     sd_r, sd_c   = acwr_val("SD")
@@ -503,37 +515,40 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
 
     player_cards = ""
     for player in sorted(dff["player"].unique()):
-        dp = dff[dff["player"] == player]
+        dp = dff[dff["player"] == player].sort_values("date")
         position = dp["position"].iloc[0]
-        poste_avg = dff[dff["position"] == position]
+        last_date = dp["date"].max()
+        dp_last = dp[dp["date"] == last_date]
 
         rows = ""
         for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
                             ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
-            val     = round(dp[col].mean(), 1)
-            avg_pos = round(poste_avg[col].mean(), 1)
-            diff    = round(val - avg_pos, 1)
-            diff_color = "#2e7d32" if diff >= 0 else "#c62828"
-            diff_str = f"+{diff}" if diff >= 0 else str(diff)
+            last_val  = round(dp_last[col].mean(), 1) if not dp_last.empty else "-"
+            perso_avg = round(dp[col].mean(), 1) if not dp.empty else "-"
+            arrow = trend_arrow(last_val, perso_avg)
             rows += f"""
             <tr>
                 <td>{label}</td>
-                <td>{val}</td>
-                <td>{avg_pos}</td>
-                <td style="color:{diff_color}; font-weight:600">{diff_str}</td>
+                <td>{last_val}</td>
+                <td>{perso_avg}</td>
+                <td>{arrow}</td>
             </tr>"""
 
         player_cards += f"""
         <div class="player-card">
-            <h3>{player} <span class="position-badge">{position}</span></h3>
+            <h3>{player} <span class="position-badge">{position}</span>
+                <small style="color:#666; font-weight:normal; margin-left:8px;">
+                    Last session: {last_date.strftime('%d/%m/%Y')}
+                </small>
+            </h3>
             <table>
                 <thead>
                     <tr>
                         <th>Metric</th>
-                        <th>Player avg</th>
-                        <th>Position avg</th>
-                        <th>Diff</th>
+                        <th>Last session</th>
+                        <th>Personal avg</th>
+                        <th>Trend</th>
                     </tr>
                 </thead>
                 <tbody>{rows}</tbody>
@@ -627,6 +642,17 @@ def export_comparison_pdf(n_clicks, ref_date):
         ("decel_min", "Decel/min"),
     ]
 
+    def trend_arrow(val, ref):
+        if val == "-" or ref == "-" or ref == 0:
+            return "-"
+        pct = round((val - ref) / ref * 100, 1)
+        if pct >= 5:
+            return f'<span style="color:#2e7d32; font-weight:700">▲ {pct:+.1f}%</span>'
+        elif pct <= -5:
+            return f'<span style="color:#c62828; font-weight:700">▼ {pct:+.1f}%</span>'
+        else:
+            return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
+
     def build_session_table(d_this, d_prev, session_label, date_this, date_prev):
         if d_this.empty and d_prev.empty:
             return f"<p>No data found for {session_label}.</p>"
@@ -640,7 +666,7 @@ def export_comparison_pdf(n_clicks, ref_date):
                 <tr>
                     <th>Player</th>
                     <th>Position</th>
-                    {''.join(f'<th>{label}<br><small>This week</small></th><th>{label}<br><small>Prev week</small></th><th>Diff</th>' for _, label in metrics)}
+                    {''.join(f'<th>{label}<br><small>This</small></th><th>{label}<br><small>Prev</small></th><th>Trend</th>' for _, label in metrics)}
                 </tr>
             </thead>
             <tbody>"""
@@ -655,19 +681,11 @@ def export_comparison_pdf(n_clicks, ref_date):
             for col, _ in metrics:
                 val_this = round(p_this[col].mean(), 1) if not p_this.empty else "-"
                 val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty else "-"
-
-                if val_this != "-" and val_prev != "-":
-                    diff = round(val_this - val_prev, 1)
-                    diff_color = "#2e7d32" if diff >= 0 else "#c62828"
-                    diff_str = f"+{diff}" if diff >= 0 else str(diff)
-                else:
-                    diff_color = "#666"
-                    diff_str = "-"
-
+                arrow = trend_arrow(val_this, val_prev)
                 cells += f"""
                     <td>{val_this}</td>
                     <td>{val_prev}</td>
-                    <td style="color:{diff_color}; font-weight:600">{diff_str}</td>"""
+                    <td>{arrow}</td>"""
 
             rows += f"""
             <tr>
