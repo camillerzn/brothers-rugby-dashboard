@@ -35,7 +35,8 @@ POSITION_PAR_JOUEUR = {
     "Remi":       "Forwards",
     "George":     "Forwards",
     "Noah":       "Forwards",
-    "Fus":        "Backs",
+    "Fus":        "Forwards",
+    "Jeremiah":   "Forwards",
     "Prass":      "Backs",
     "Della":      "Backs",
     "Athen":      "Backs",
@@ -168,22 +169,51 @@ app.layout = html.Div(style={
         "marginBottom": "24px"
     }),
 
-    html.Div(style={"marginBottom": "16px"}, children=[
-        html.Button(
-            "Export Weekly Report (PDF)",
-            id="btn-rapport",
-            style={
-                "backgroundColor": COULEURS["bleu"],
-                "color": COULEURS["blanc"],
-                "border": "none",
-                "borderRadius": "8px",
-                "padding": "10px 20px",
-                "cursor": "pointer",
-                "fontSize": "14px",
-                "fontWeight": "600",
-            }
-        ),
-        dcc.Download(id="download-rapport"),
+    html.Div(style={"marginBottom": "16px", "display": "flex", "gap": "16px", "flexWrap": "wrap", "alignItems": "flex-end"}, children=[
+        html.Div([
+            html.Button(
+                "Export Weekly Report (PDF)",
+                id="btn-rapport",
+                style={
+                    "backgroundColor": COULEURS["bleu"],
+                    "color": COULEURS["blanc"],
+                    "border": "none",
+                    "borderRadius": "8px",
+                    "padding": "10px 20px",
+                    "cursor": "pointer",
+                    "fontSize": "14px",
+                    "fontWeight": "600",
+                }
+            ),
+            dcc.Download(id="download-rapport"),
+        ]),
+        html.Div([
+            html.Label("Comparison Report — reference week", style={"color": COULEURS["gris"], "fontSize": "12px", "display": "block", "marginBottom": "6px"}),
+            html.Div(style={"display": "flex", "gap": "12px", "alignItems": "center"}, children=[
+                dcc.DatePickerSingle(
+                    id="date-comparaison",
+                    min_date_allowed=df["date"].min(),
+                    max_date_allowed=df["date"].max(),
+                    date=df["date"].max(),
+                    display_format="DD/MM/YYYY",
+                ),
+                html.Button(
+                    "Export Comparison Report (PDF)",
+                    id="btn-comparaison",
+                    style={
+                        "backgroundColor": "#C77DFF",
+                        "color": COULEURS["blanc"],
+                        "border": "none",
+                        "borderRadius": "8px",
+                        "padding": "10px 20px",
+                        "cursor": "pointer",
+                        "fontSize": "14px",
+                        "fontWeight": "600",
+                    }
+                ),
+                dcc.Download(id="download-comparaison"),
+            ]),
+        ]),
     ]),
 
     html.Div(id="graphs", style={
@@ -216,8 +246,8 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
     if start_date and end_date:
         dff = dff[(dff["date"] >= start_date) & (dff["date"] <= end_date)]
 
-    dff_games = dff[dff["type"].isin(["game 1st half", "game 2nd half"])].copy()
-    dff_training = dff[~dff["type"].isin(["game 1st half", "game 2nd half"])].copy()
+    dff_games = dff[dff["type"].isin(["Game 1st Half", "Game 2nd Half"])].copy()
+    dff_training = dff[~dff["type"].isin(["Game 1st Half", "Game 2nd Half"])].copy()
 
     palette = px.colors.qualitative.Plotly
     tous_les_joueurs = sorted(dff["player"].unique())
@@ -249,8 +279,8 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
             ))
 
         for player in sorted(dff_games["player"].unique()):
-            d1 = dff_games[(dff_games["player"] == player) & (dff_games["type"] == "game 1st half")].sort_values("date")
-            d2 = dff_games[(dff_games["player"] == player) & (dff_games["type"] == "game 2nd half")].sort_values("date")
+            d1 = dff_games[(dff_games["player"] == player) & (dff_games["type"] == "Game 1st Half")].sort_values("date")
+            d2 = dff_games[(dff_games["player"] == player) & (dff_games["type"] == "Game 2nd Half")].sort_values("date")
             has_training = player in dff_training["player"].unique()
             fig.add_trace(go.Bar(
                 x=d1["date"], y=d1[col],
@@ -516,55 +546,32 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     <head>
     <meta charset="utf-8">
     <style>
-        body {{
-            font-family: Arial, sans-serif;
-            background: #fff;
-            color: #111;
-            padding: 32px;
-            font-size: 13px;
-        }}
+        body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 13px; }}
         h1 {{ color: #4A90D9; font-size: 22px; margin-bottom: 4px; }}
-        h2 {{ color: #4A90D9; font-size: 16px; margin-top: 28px;
-              border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
+        h2 {{ color: #4A90D9; font-size: 16px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
         h3 {{ font-size: 14px; margin: 0 0 8px 0; }}
         .subtitle {{ color: #666; font-size: 12px; margin-bottom: 24px; }}
         table {{ width: 100%; border-collapse: collapse; margin-bottom: 16px; }}
-        th {{ background: #4A90D9; color: white; padding: 8px;
-              text-align: left; font-size: 12px; }}
+        th {{ background: #4A90D9; color: white; padding: 8px; text-align: left; font-size: 12px; }}
         td {{ padding: 7px 8px; border-bottom: 1px solid #eee; }}
         tr:nth-child(even) {{ background: #f7f9fc; }}
-        .position-badge {{
-            background: #4A90D9; color: white; border-radius: 4px;
-            padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px;
-        }}
+        .position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
         .player-card {{ margin-bottom: 28px; page-break-inside: avoid; }}
     </style>
     </head>
     <body>
         <h1>Brothers Rugby — Weekly Report</h1>
         <p class="subtitle">Period: {start_label} → {end_label}</p>
-
         <h2>Team Summary</h2>
         <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Team avg</th>
-                    <th>Forwards avg</th>
-                    <th>Backs avg</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
             <tbody>{team_rows}</tbody>
         </table>
-
         <h2>Acute:Chronic Workload Ratio</h2>
         <table>
-            <thead>
-                <tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr>
-            </thead>
+            <thead><tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr></thead>
             <tbody>{acwr_rows}</tbody>
         </table>
-
         <h2>Individual Player Reports</h2>
         {player_cards}
     </body>
@@ -577,6 +584,138 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
             pdf_bytes = pdf_file.read()
 
     filename = f"brothers_rugby_{start_label.replace('/', '-')}_{end_label.replace('/', '-')}.pdf"
+    return dcc.send_bytes(pdf_bytes, filename)
+
+
+@app.callback(
+    Output("download-comparaison", "data"),
+    Input("btn-comparaison", "n_clicks"),
+    Input("date-comparaison", "date"),
+    prevent_initial_call=True,
+)
+def export_comparison_pdf(n_clicks, ref_date):
+    if not callback_context.triggered or callback_context.triggered[0]["prop_id"] != "btn-comparaison.n_clicks":
+        return None
+
+    ref = pd.to_datetime(ref_date)
+
+    def get_day(reference, weekday):
+        days_ahead = weekday - reference.weekday()
+        if days_ahead > 0:
+            days_ahead -= 7
+        return reference + pd.Timedelta(days=days_ahead)
+
+    tue_this  = get_day(ref, 1)
+    thu_this  = get_day(ref, 3)
+    tue_prev  = tue_this - pd.Timedelta(weeks=1)
+    thu_prev  = thu_this - pd.Timedelta(weeks=1)
+
+    def get_session(date):
+        return df[df["date"] == date].copy()
+
+    d_tue_this = get_session(tue_this)
+    d_thu_this = get_session(thu_this)
+    d_tue_prev = get_session(tue_prev)
+    d_thu_prev = get_session(thu_prev)
+
+    metrics = [
+        ("TD", "Total Distance (m)"),
+        ("HSR", "HSR (m)"),
+        ("SD", "Sprint Distance (m)"),
+        ("top_Speed", "Top Speed (m/s)"),
+        ("accel_min", "Accel/min"),
+        ("decel_min", "Decel/min"),
+    ]
+
+    def build_session_table(d_this, d_prev, session_label, date_this, date_prev):
+        if d_this.empty and d_prev.empty:
+            return f"<p>No data found for {session_label}.</p>"
+
+        all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
+
+        header = f"""
+        <h3>{session_label} — {date_this.strftime('%d/%m/%Y')} vs {date_prev.strftime('%d/%m/%Y')}</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Position</th>
+                    {''.join(f'<th>{label}<br><small>This week</small></th><th>{label}<br><small>Prev week</small></th><th>Diff</th>' for _, label in metrics)}
+                </tr>
+            </thead>
+            <tbody>"""
+
+        rows = ""
+        for player in all_players:
+            p_this = d_this[d_this["player"] == player]
+            p_prev = d_prev[d_prev["player"] == player]
+            position = POSITION_PAR_JOUEUR.get(player, "Unknown")
+
+            cells = ""
+            for col, _ in metrics:
+                val_this = round(p_this[col].mean(), 1) if not p_this.empty else "-"
+                val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty else "-"
+
+                if val_this != "-" and val_prev != "-":
+                    diff = round(val_this - val_prev, 1)
+                    diff_color = "#2e7d32" if diff >= 0 else "#c62828"
+                    diff_str = f"+{diff}" if diff >= 0 else str(diff)
+                else:
+                    diff_color = "#666"
+                    diff_str = "-"
+
+                cells += f"""
+                    <td>{val_this}</td>
+                    <td>{val_prev}</td>
+                    <td style="color:{diff_color}; font-weight:600">{diff_str}</td>"""
+
+            rows += f"""
+            <tr>
+                <td><strong>{player}</strong></td>
+                <td>{position}</td>
+                {cells}
+            </tr>"""
+
+        return header + rows + "</tbody></table>"
+
+    tuesday_table  = build_session_table(d_tue_this, d_tue_prev, "Tuesday", tue_this, tue_prev)
+    thursday_table = build_session_table(d_thu_this, d_thu_prev, "Thursday", thu_this, thu_prev)
+
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="utf-8">
+    <style>
+        body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 11px; }}
+        h1 {{ color: #4A90D9; font-size: 20px; margin-bottom: 4px; }}
+        h2 {{ color: #4A90D9; font-size: 15px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
+        h3 {{ font-size: 13px; margin: 20px 0 8px 0; color: #333; }}
+        .subtitle {{ color: #666; font-size: 11px; margin-bottom: 24px; }}
+        table {{ width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 10px; }}
+        th {{ background: #4A90D9; color: white; padding: 6px 4px; text-align: center; font-size: 9px; }}
+        td {{ padding: 5px 4px; border-bottom: 1px solid #eee; text-align: center; }}
+        td:first-child, td:nth-child(2) {{ text-align: left; }}
+        tr:nth-child(even) {{ background: #f7f9fc; }}
+    </style>
+    </head>
+    <body>
+        <h1>Brothers Rugby — Week Comparison Report</h1>
+        <p class="subtitle">Reference week ending: {ref.strftime('%d/%m/%Y')}</p>
+        <h2>Tuesday Session</h2>
+        {tuesday_table}
+        <h2>Thursday Session</h2>
+        {thursday_table}
+    </body>
+    </html>
+    """
+
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
+        WeasyHTML(string=html_content).write_pdf(f.name)
+        with open(f.name, "rb") as pdf_file:
+            pdf_bytes = pdf_file.read()
+
+    filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
     return dcc.send_bytes(pdf_bytes, filename)
 
 
