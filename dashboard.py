@@ -448,9 +448,12 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     end_label   = pd.to_datetime(end_date).strftime("%d/%m/%Y")
 
     def acwr_val(col):
-        today = dff["date"].max()
-        aigu = dff[dff["date"] >= today - pd.Timedelta(days=7)][col].mean()
-        chronique = dff[dff["date"] >= today - pd.Timedelta(days=28)][col].mean()
+       today = pd.to_datetime(end_date)
+    df_acwr = df[df["player"].isin(dff["player"].unique())] if players_sel else df.copy()
+
+    def acwr_val(col):
+        aigu = df_acwr[(df_acwr["date"] >= today - pd.Timedelta(days=7)) & (df_acwr["date"] <= today)][col].mean()
+        chronique = df_acwr[(df_acwr["date"] >= today - pd.Timedelta(days=28)) & (df_acwr["date"] <= today)][col].mean()
         if chronique and chronique > 0:
             ratio = round(aigu / chronique, 2)
         else:
