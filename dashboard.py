@@ -479,11 +479,11 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
             return "-"
         pct = round((val - ref) / ref * 100, 1)
         if pct >= 5:
-            return f'<span style="color:#2e7d32; font-weight:700">▲ {pct:+.1f}%</span>'
+            return f'<b style="color:#2e7d32">&#9650; {pct:+.1f}%</b>'
         elif pct <= -5:
-            return f'<span style="color:#c62828; font-weight:700">▼ {pct:+.1f}%</span>'
+            return f'<b style="color:#c62828">&#9660; {pct:+.1f}%</b>'
         else:
-            return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
+            return f'<b style="color:#f57c00">&#8594; {pct:+.1f}%</b>'
 
     td_r, td_c   = acwr_val("TD")
     hsr_r, hsr_c = acwr_val("HSR")
@@ -638,11 +638,11 @@ def export_comparison_pdf(n_clicks, ref_date):
             return "-"
         pct = round((val - ref_val) / ref_val * 100, 1)
         if pct >= 5:
-            return f'<span style="color:#2e7d32; font-weight:700">▲ {pct:+.1f}%</span>'
+            return f'<b style="color:#2e7d32">&#9650; {pct:+.1f}%</b>'
         elif pct <= -5:
-            return f'<span style="color:#c62828; font-weight:700">▼ {pct:+.1f}%</span>'
+            return f'<b style="color:#c62828">&#9660; {pct:+.1f}%</b>'
         else:
-            return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
+            return f'<b style="color:#f57c00">&#8594; {pct:+.1f}%</b>'
 
     team_rows = ""
     for col, label in metrics:
