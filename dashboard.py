@@ -475,7 +475,12 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
             return "Overload"
 
     def trend_arrow(val, ref):
-        if val == "-" or ref == "-" or ref == 0:
+        try:
+            val = float(val)
+            ref = float(ref)
+        except (TypeError, ValueError):
+            return "-"
+        if np.isnan(val) or np.isnan(ref) or ref == 0:
             return "-"
         pct = round((val - ref) / ref * 100, 1)
         if pct >= 5:
@@ -529,7 +534,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
                             ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
-            session_val = round(dp[col].mean(), 1) if not dp.empty else "-"
+            session_val = round(dp[col].mean(), 1) if not dp.empty and not np.isnan(dp[col].mean()) else "-"
             perso_avg   = round(df[df["player"] == player][col].mean(), 1)
             arrow = trend_arrow(session_val, perso_avg)
             rows += f"""
@@ -615,11 +620,11 @@ def export_comparison_pdf(n_clicks, ref_date):
     if not callback_context.triggered or callback_context.triggered[0]["prop_id"] != "btn-comparaison.n_clicks":
         return None
 
-    ref = pd.to_datetime(ref_date)
-    prev = ref - pd.Timedelta(weeks=1)
+    ref = pd.to_datetime(ref_date).normalize()
+    prev = ref - pd.Timedelta(days=7)
 
-    d_this = df[df["date"] == ref].copy()
-    d_prev = df[df["date"] == prev].copy()
+    d_this = df[df["date"].dt.normalize() == ref].copy()
+    d_prev = df[df["date"].dt.normalize() == prev].copy()
 
     if d_this.empty and d_prev.empty:
         return None
@@ -634,7 +639,12 @@ def export_comparison_pdf(n_clicks, ref_date):
     ]
 
     def trend_arrow(val, ref_val):
-        if val == "-" or ref_val == "-" or ref_val == 0:
+        try:
+            val = float(val)
+            ref_val = float(ref_val)
+        except (TypeError, ValueError):
+            return "-"
+        if np.isnan(val) or np.isnan(ref_val) or ref_val == 0:
             return "-"
         pct = round((val - ref_val) / ref_val * 100, 1)
         if pct >= 5:
@@ -651,8 +661,8 @@ def export_comparison_pdf(n_clicks, ref_date):
             ("Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
             ("Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
         ]:
-            val_this = round(mask_this[col].mean(), 1) if not mask_this.empty else "-"
-            val_prev = round(mask_prev[col].mean(), 1) if not mask_prev.empty else "-"
+            val_this = round(mask_this[col].mean(), 1) if not mask_this.empty and not np.isnan(mask_this[col].mean()) else "-"
+            val_prev = round(mask_prev[col].mean(), 1) if not mask_prev.empty and not np.isnan(mask_prev[col].mean()) else "-"
             arrow = trend_arrow(val_this, val_prev)
             team_rows += f"""
             <tr>
@@ -673,8 +683,8 @@ def export_comparison_pdf(n_clicks, ref_date):
 
         cells = ""
         for col, _ in metrics:
-            val_this = round(p_this[col].mean(), 1) if not p_this.empty else "-"
-            val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty else "-"
+            val_this = round(p_this[col].mean(), 1) if not p_this.empty and not np.isnan(p_this[col].mean()) else "-"
+            val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty and not np.isnan(p_prev[col].mean()) else "-"
             arrow = trend_arrow(val_this, val_prev)
             cells += f"""
                 <td>{val_this}</td>
