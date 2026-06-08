@@ -188,7 +188,7 @@ app.layout = html.Div(style={
             dcc.Download(id="download-rapport"),
         ]),
         html.Div([
-            html.Label("Comparison Report — reference week", style={"color": COULEURS["gris"], "fontSize": "12px", "display": "block", "marginBottom": "6px"}),
+            html.Label("Comparison Report — reference session", style={"color": COULEURS["gris"], "fontSize": "12px", "display": "block", "marginBottom": "6px"}),
             html.Div(style={"display": "flex", "gap": "12px", "alignItems": "center"}, children=[
                 dcc.DatePickerSingle(
                     id="date-comparaison",
@@ -277,7 +277,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
                 legendgroup=player,
                 marker_color=couleur_joueur[player],
                 showlegend=True,
-                width=1000*3600*24*0.8,  # 0.8 jour en millisecondes
+                width=1000*3600*24*0.8,
             ))
 
         for player in sorted(dff_games["player"].unique()):
@@ -370,8 +370,8 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
     aigu_window = today - pd.Timedelta(days=7)
     chronique_window = today - pd.Timedelta(days=28)
 
-    # Pour l'ACWR on prend TOUTES les données (pas juste dff filtré)
     df_acwr = df[df["player"].isin(dff["player"].unique())] if players_sel else df.copy()
+
     def acwr(col):
         aigu = df_acwr[(df_acwr["date"] >= aigu_window) & (df_acwr["date"] <= today)][col].mean()
         chronique = df_acwr[(df_acwr["date"] >= chronique_window) & (df_acwr["date"] <= today)][col].mean()
@@ -490,7 +490,6 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     sd_r, sd_c   = acwr_val("SD")
     ts_r, ts_c   = acwr_val("top_Speed")
 
-    # Résumé équipe avec comparaison
     team_rows = ""
     for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                         ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
@@ -560,6 +559,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <tbody>{rows}</tbody>
             </table>
         </div>"""
+
     html_content = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -579,20 +579,20 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 </style>
 </head>
 <body>
-    <h1>Brothers Rugby — Weekly Report</h1>
-    <p class="subtitle">Period: {start_label} → {end_label}</p>
-    <h2>Team Summary</h2>
-    <table>
-        <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
-        <tbody>{team_rows}</tbody>
-    </table>
-    <h2>Acute:Chronic Workload Ratio</h2>
-    <table>
-        <thead><tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr></thead>
-        <tbody>{acwr_rows}</tbody>
-    </table>
-    <h2>Individual Player Reports</h2>
-    {player_cards}
+<h1>Brothers Rugby - Weekly Report</h1>
+<p class="subtitle">Period: {start_label} to {end_label}</p>
+<h2>Team Summary</h2>
+<table>
+<thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
+<tbody>{team_rows}</tbody>
+</table>
+<h2>Acute:Chronic Workload Ratio</h2>
+<table>
+<thead><tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr></thead>
+<tbody>{acwr_rows}</tbody>
+</table>
+<h2>Individual Player Reports</h2>
+{player_cards}
 </body>
 </html>"""
 
@@ -644,7 +644,6 @@ def export_comparison_pdf(n_clicks, ref_date):
         else:
             return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
 
-    # Résumé équipe
     team_rows = ""
     for col, label in metrics:
         for label_group, mask_this, mask_prev in [
@@ -664,7 +663,6 @@ def export_comparison_pdf(n_clicks, ref_date):
                 <td>{arrow}</td>
             </tr>"""
 
-    # Comparaison joueurs
     all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
 
     player_rows = ""
@@ -690,59 +688,42 @@ def export_comparison_pdf(n_clicks, ref_date):
             {cells}
         </tr>"""
 
-    html_content = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset="utf-8">
-    <style>
-        body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 11px; }}
-        h1 {{ color: #4A90D9; font-size: 20px; margin-bottom: 4px; }}
-        h2 {{ color: #4A90D9; font-size: 15px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
-        h3 {{ font-size: 13px; margin: 20px 0 8px 0; color: #333; }}
-        .subtitle {{ color: #666; font-size: 11px; margin-bottom: 24px; }}
-        table {{ width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 10px; }}
-        th {{ background: #4A90D9; color: white; padding: 6px 4px; text-align: center; font-size: 9px; }}
-        td {{ padding: 5px 4px; border-bottom: 1px solid #eee; text-align: center; }}
-        td:first-child, td:nth-child(2) {{ text-align: left; }}
-        tr:nth-child(even) {{ background: #f7f9fc; }}
-        .badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 6px; font-size: 9px; margin-left: 4px; }}
-    </style>
-    </head>
-    <body>
-        <h1>Brothers Rugby — Session Comparison Report</h1>
-        <p class="subtitle">
-            Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}
-        </p>
+    metric_headers = "".join(
+        f"<th>{label}<br><small>This</small></th><th>{label}<br><small>Prev</small></th><th>Trend</th>"
+        for _, label in metrics
+    )
 
-        <h2>Team Summary — {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Group</th>
-                    <th>This session</th>
-                    <th>Prev session</th>
-                    <th>Trend</th>
-                </tr>
-            </thead>
-            <tbody>{team_rows}</tbody>
-        </table>
-
-        <h2>Player Comparison</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Position</th>
-                    {''.join(f'<th>{label}<br><small>This</small></th><th>{label}<br><small>Prev</small></th><th>Trend</th>' for _, label in metrics)}
-                </tr>
-            </thead>
-            <tbody>{player_rows}</tbody>
-        </table>
-    </body>
-    </html>
-    """
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 11px; }}
+h1 {{ color: #4A90D9; font-size: 20px; margin-bottom: 4px; }}
+h2 {{ color: #4A90D9; font-size: 15px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
+.subtitle {{ color: #666; font-size: 11px; margin-bottom: 24px; }}
+table {{ width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 10px; }}
+th {{ background: #4A90D9; color: white; padding: 6px 4px; text-align: center; font-size: 9px; }}
+td {{ padding: 5px 4px; border-bottom: 1px solid #eee; text-align: center; }}
+td:first-child, td:nth-child(2) {{ text-align: left; }}
+tr:nth-child(even) {{ background: #f7f9fc; }}
+</style>
+</head>
+<body>
+<h1>Brothers Rugby - Session Comparison Report</h1>
+<p class="subtitle">Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}</p>
+<h2>Team Summary</h2>
+<table>
+<thead><tr><th>Metric</th><th>Group</th><th>This session</th><th>Prev session</th><th>Trend</th></tr></thead>
+<tbody>{team_rows}</tbody>
+</table>
+<h2>Player Comparison</h2>
+<table>
+<thead><tr><th>Player</th><th>Position</th>{metric_headers}</tr></thead>
+<tbody>{player_rows}</tbody>
+</table>
+</body>
+</html>"""
 
     with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
         WeasyHTML(string=html_content).write_pdf(f.name)
