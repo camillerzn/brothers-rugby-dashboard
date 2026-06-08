@@ -372,7 +372,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
 
     # Pour l'ACWR on prend TOUTES les données (pas juste dff filtré)
     df_acwr = df[df["player"].isin(dff["player"].unique())] if players_sel else df.copy()
-   def acwr(col):
+    def acwr(col):
         aigu = df_acwr[(df_acwr["date"] >= aigu_window) & (df_acwr["date"] <= today)][col].mean()
         chronique = df_acwr[(df_acwr["date"] >= chronique_window) & (df_acwr["date"] <= today)][col].mean()
         if chronique and chronique > 0:
