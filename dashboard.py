@@ -366,13 +366,15 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
     am  = round(dff["accel_min"].mean(), 2) if len(dff) else 0
     dm  = round(dff["decel_min"].mean(), 2) if len(dff) else 0
 
-    today = dff["date"].max()
+    today = pd.to_datetime(end_date) if end_date else dff["date"].max()
     aigu_window = today - pd.Timedelta(days=7)
     chronique_window = today - pd.Timedelta(days=28)
 
-    def acwr(col):
-        aigu = dff[dff["date"] >= aigu_window][col].mean()
-        chronique = dff[dff["date"] >= chronique_window][col].mean()
+    # Pour l'ACWR on prend TOUTES les données (pas juste dff filtré)
+    df_acwr = df[df["player"].isin(dff["player"].unique())] if players_sel else df.copy()
+   def acwr(col):
+        aigu = df_acwr[(df_acwr["date"] >= aigu_window) & (df_acwr["date"] <= today)][col].mean()
+        chronique = df_acwr[(df_acwr["date"] >= chronique_window) & (df_acwr["date"] <= today)][col].mean()
         if chronique and chronique > 0:
             ratio = round(aigu / chronique, 2)
         else:
