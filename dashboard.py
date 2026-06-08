@@ -504,7 +504,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
             <td>{avg}</td>
             <td>{fwd}</td>
             <td>{bck}</td>
-        </tr>""""""
+        </tr>"""
 
     acwr_rows = ""
     for label, ratio, color in [
