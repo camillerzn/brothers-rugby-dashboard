@@ -635,8 +635,6 @@ def export_comparison_pdf(n_clicks, ref_date):
         d_prev = df[df["date"].dt.normalize() == prev].copy()
     else:
         prev = None
-        else:
-        prev = None
         d_prev = pd.DataFrame(columns=df.columns)
 
     if d_this.empty and d_prev.empty:
