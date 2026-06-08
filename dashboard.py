@@ -491,7 +491,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     ts_r, ts_c   = acwr_val("top_Speed")
 
     # Résumé équipe avec comparaison
-   team_rows = ""
+    team_rows = ""
     for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                         ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
                         ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
