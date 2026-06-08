@@ -560,43 +560,41 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <tbody>{rows}</tbody>
             </table>
         </div>"""
-    html_content = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset="utf-8">
-    <style>
-        body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 13px; }}
-        h1 {{ color: #4A90D9; font-size: 22px; margin-bottom: 4px; }}
-        h2 {{ color: #4A90D9; font-size: 16px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
-        h3 {{ font-size: 14px; margin: 0 0 8px 0; }}
-        .subtitle {{ color: #666; font-size: 12px; margin-bottom: 24px; }}
-        table {{ width: 100%; border-collapse: collapse; margin-bottom: 16px; }}
-        th {{ background: #4A90D9; color: white; padding: 8px; text-align: left; font-size: 12px; }}
-        td {{ padding: 7px 8px; border-bottom: 1px solid #eee; }}
-        tr:nth-child(even) {{ background: #f7f9fc; }}
-        .position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
-        .player-card {{ margin-bottom: 28px; page-break-inside: avoid; }}
-    </style>
-    </head>
-    <body>
-        <h1>Brothers Rugby — Weekly Report</h1>
-        <p class="subtitle">Period: {start_label} → {end_label}</p>
-        <h2>Team Summary</h2>
-        <table>
-            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
-            <tbody>{team_rows}</tbody>
-        </table>
-        <h2>Acute:Chronic Workload Ratio</h2>
-        <table>
-            <thead><tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr></thead>
-            <tbody>{acwr_rows}</tbody>
-        </table>
-        <h2>Individual Player Reports</h2>
-        {player_cards}
-    </body>
-    </html>
-    """
+    html_content = f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body {{ font-family: Arial, sans-serif; background: #fff; color: #111; padding: 32px; font-size: 13px; }}
+h1 {{ color: #4A90D9; font-size: 22px; margin-bottom: 4px; }}
+h2 {{ color: #4A90D9; font-size: 16px; margin-top: 28px; border-bottom: 2px solid #4A90D9; padding-bottom: 4px; }}
+h3 {{ font-size: 14px; margin: 0 0 8px 0; }}
+.subtitle {{ color: #666; font-size: 12px; margin-bottom: 24px; }}
+table {{ width: 100%; border-collapse: collapse; margin-bottom: 16px; }}
+th {{ background: #4A90D9; color: white; padding: 8px; text-align: left; font-size: 12px; }}
+td {{ padding: 7px 8px; border-bottom: 1px solid #eee; }}
+tr:nth-child(even) {{ background: #f7f9fc; }}
+.position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
+.player-card {{ margin-bottom: 28px; page-break-inside: avoid; }}
+</style>
+</head>
+<body>
+    <h1>Brothers Rugby — Weekly Report</h1>
+    <p class="subtitle">Period: {start_label} → {end_label}</p>
+    <h2>Team Summary</h2>
+    <table>
+        <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
+        <tbody>{team_rows}</tbody>
+    </table>
+    <h2>Acute:Chronic Workload Ratio</h2>
+    <table>
+        <thead><tr><th>Metric</th><th>Ratio</th><th>Zone</th></tr></thead>
+        <tbody>{acwr_rows}</tbody>
+    </table>
+    <h2>Individual Player Reports</h2>
+    {player_cards}
+</body>
+</html>"""
 
     with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
         WeasyHTML(string=html_content).write_pdf(f.name)
