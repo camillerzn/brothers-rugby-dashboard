@@ -666,12 +666,12 @@ def export_comparison_pdf(n_clicks, ref_date):
             return f'<b style="color:#f57c00">&#8594; {pct:+.1f}%</b>'
 
     team_rows = ""
-    for col, label in metrics:
-        for label_group, mask_this, mask_prev in [
-            ("Team", d_this, d_prev),
-            ("Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
-            ("Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
-        ]:
+    for label_group, mask_this, mask_prev in [
+        ("Team", d_this, d_prev),
+        ("Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
+        ("Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
+    ]:
+        for col, label in metrics:
             val_this = round(mask_this[col].mean(), 1) if not mask_this.empty and not np.isnan(mask_this[col].mean()) else "-"
             val_prev = round(mask_prev[col].mean(), 1) if not mask_prev.empty and not np.isnan(mask_prev[col].mean()) else "-"
             arrow = trend_arrow(val_this, val_prev)
