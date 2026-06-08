@@ -277,6 +277,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
                 legendgroup=player,
                 marker_color=couleur_joueur[player],
                 showlegend=True,
+                width=1000*3600*24*0.8,  # 0.8 jour en millisecondes
             ))
 
         for player in sorted(dff_games["player"].unique()):
@@ -291,6 +292,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
                 opacity=1.0,
                 marker_line=dict(color="white", width=2),
                 showlegend=not has_training,
+                width=1000*3600*24*0.4,
             ))
             fig.add_trace(go.Bar(
                 x=d2["date"], y=d2[col],
@@ -300,6 +302,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
                 opacity=0.5,
                 marker_line=dict(color="white", width=2),
                 showlegend=False,
+                width=1000*3600*24*0.4,
             ))
 
         moyenne_par_poste = (
@@ -518,10 +521,9 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         dp = dff[dff["player"] == player].sort_values("date")
         position = dp["position"].iloc[0]
         last_date = dp["date"].max()
-        dp_last = dp[dp["date"] == last_date]
 
-    rows = ""
-    for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
+        rows = ""
+        for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
                             ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
             session_val = round(dp[col].mean(), 1) if not dp.empty else "-"
@@ -554,7 +556,6 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <tbody>{rows}</tbody>
             </table>
         </div>"""
-
     html_content = f"""
     <!DOCTYPE html>
     <html>
