@@ -490,20 +490,25 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     sd_r, sd_c   = acwr_val("SD")
     ts_r, ts_c   = acwr_val("top_Speed")
 
+    # Résumé équipe avec comparaison
     team_rows = ""
-    for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
-                        ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
-                        ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
-        fwd = round(dff[dff["position"] == "Forwards"][col].mean(), 1)
-        bck = round(dff[dff["position"] == "Backs"][col].mean(), 1)
-        avg = round(dff[col].mean(), 1)
-        team_rows += f"""
-        <tr>
-            <td>{label}</td>
-            <td>{avg}</td>
-            <td>{fwd}</td>
-            <td>{bck}</td>
-        </tr>"""
+    for col, label in metrics:
+        for group, label_group, mask_this, mask_prev in [
+            ("Team", "Team", d_this, d_prev),
+            ("Forwards", "Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
+            ("Backs", "Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
+        ]:
+            val_this = round(mask_this[col].mean(), 1) if not mask_this.empty else "-"
+            val_prev = round(mask_prev[col].mean(), 1) if not mask_prev.empty else "-"
+            arrow = trend_arrow(val_this, val_prev)
+            team_rows += f"""
+            <tr>
+                <td>{label}</td>
+                <td>{label_group}</td>
+                <td>{val_this}</td>
+                <td>{val_prev}</td>
+                <td>{arrow}</td>
+            </tr>"""
 
     acwr_rows = ""
     for label, ratio, color in [
@@ -715,18 +720,20 @@ def export_comparison_pdf(n_clicks, ref_date):
             Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}
         </p>
 
-        <h2>Team Summary — {ref.strftime('%d/%m/%Y')}</h2>
+        <h2>Team Summary — {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}</h2>
         <table>
-            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
-            <tbody>{team_this}</tbody>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Group</th>
+                    <th>This session</th>
+                    <th>Prev session</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody>{team_rows}</tbody>
         </table>
-
-        <h2>Team Summary — {prev.strftime('%d/%m/%Y')}</h2>
-        <table>
-            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
-            <tbody>{team_prev}</tbody>
-        </table>
-
+        
         <h2>Player Comparison</h2>
         <table>
             <thead>
@@ -749,6 +756,10 @@ def export_comparison_pdf(n_clicks, ref_date):
 
     filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
     return dcc.send_bytes(pdf_bytes, filename)
+cd Desktop/Brothers\ Rugby
+git add dashboard.py
+git commit -m "update dashboard"
+git push
 
 
 if __name__ == "__main__":
