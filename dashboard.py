@@ -514,7 +514,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         ("Top Speed", ts_r, ts_c),
     ]:
         acwr_rows += f"""
-        <tr>
+         <tr>
             <td>{label}</td>
             <td style="color:{color}; font-weight:700">{ratio}</td>
             <td style="color:{color}">{zone_label(ratio)}</td>
