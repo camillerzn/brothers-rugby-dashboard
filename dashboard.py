@@ -617,6 +617,7 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
     prevent_initial_call=True,
 )
 def export_comparison_pdf(n_clicks, ref_date):
+
     if not callback_context.triggered or callback_context.triggered[0]["prop_id"] != "btn-comparaison.n_clicks":
         return None
 
@@ -628,6 +629,12 @@ def export_comparison_pdf(n_clicks, ref_date):
 
     if d_this.empty and d_prev.empty:
         return None
+
+    # DEBUG TEMPORAIRE
+    print("ref:", ref)
+    print("dates in df:", df["date"].dt.normalize().unique())
+    print("d_this rows:", len(d_this))
+    print("d_prev rows:", len(d_prev))
 
     metrics = [
         ("TD", "Total Distance (m)"),
