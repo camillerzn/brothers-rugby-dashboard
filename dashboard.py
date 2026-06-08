@@ -651,23 +651,24 @@ def export_comparison_pdf(n_clicks, ref_date):
             return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
 
     # Résumé équipe
-    def team_summary_rows(d):
-        rows = ""
-        for col, label in metrics:
-            avg  = round(d[col].mean(), 1) if not d.empty else "-"
-            fwd  = round(d[d["position"] == "Forwards"][col].mean(), 1) if not d[d["position"] == "Forwards"].empty else "-"
-            bck  = round(d[d["position"] == "Backs"][col].mean(), 1) if not d[d["position"] == "Backs"].empty else "-"
-            rows += f"""
+    team_rows = ""
+    for col, label in metrics:
+        for label_group, mask_this, mask_prev in [
+            ("Team", d_this, d_prev),
+            ("Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
+            ("Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
+        ]:
+            val_this = round(mask_this[col].mean(), 1) if not mask_this.empty else "-"
+            val_prev = round(mask_prev[col].mean(), 1) if not mask_prev.empty else "-"
+            arrow = trend_arrow(val_this, val_prev)
+            team_rows += f"""
             <tr>
                 <td>{label}</td>
-                <td>{avg}</td>
-                <td>{fwd}</td>
-                <td>{bck}</td>
+                <td>{label_group}</td>
+                <td>{val_this}</td>
+                <td>{val_prev}</td>
+                <td>{arrow}</td>
             </tr>"""
-        return rows
-
-    team_this = team_summary_rows(d_this)
-    team_prev = team_summary_rows(d_prev)
 
     # Comparaison joueurs
     all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
@@ -733,7 +734,7 @@ def export_comparison_pdf(n_clicks, ref_date):
             </thead>
             <tbody>{team_rows}</tbody>
         </table>
-        
+
         <h2>Player Comparison</h2>
         <table>
             <thead>
@@ -756,10 +757,6 @@ def export_comparison_pdf(n_clicks, ref_date):
 
     filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
     return dcc.send_bytes(pdf_bytes, filename)
-cd Desktop/Brothers\ Rugby
-git add dashboard.py
-git commit -m "update dashboard"
-git push
 
 
 if __name__ == "__main__":
