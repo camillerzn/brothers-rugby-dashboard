@@ -617,24 +617,28 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
     prevent_initial_call=True,
 )
 def export_comparison_pdf(n_clicks, ref_date):
-
     if not callback_context.triggered or callback_context.triggered[0]["prop_id"] != "btn-comparaison.n_clicks":
         return None
 
     ref = pd.to_datetime(ref_date).normalize()
-    prev = ref - pd.Timedelta(days=7)
+    target_prev = ref - pd.Timedelta(days=7)
 
     d_this = df[df["date"].dt.normalize() == ref].copy()
-    d_prev = df[df["date"].dt.normalize() == prev].copy()
+
+    # Cherche la session avec le même jour de semaine, la plus proche de J-7
+    same_weekday = df[df["date"].dt.weekday == ref.weekday()]
+    dates_candidates = same_weekday["date"].dt.normalize().unique()
+    dates_candidates = [d for d in dates_candidates if d < ref]
+
+    if dates_candidates:
+        prev = min(dates_candidates, key=lambda d: abs((d - target_prev).days))
+        d_prev = df[df["date"].dt.normalize() == prev].copy()
+    else:
+        prev = None
+        d_prev = pd.DataFrame()
 
     if d_this.empty and d_prev.empty:
         return None
-
-    # DEBUG TEMPORAIRE
-    print("ref:", ref)
-    print("dates in df:", df["date"].dt.normalize().unique())
-    print("d_this rows:", len(d_this))
-    print("d_prev rows:", len(d_prev))
 
     metrics = [
         ("TD", "Total Distance (m)"),
@@ -680,12 +684,12 @@ def export_comparison_pdf(n_clicks, ref_date):
                 <td>{arrow}</td>
             </tr>"""
 
-    all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
+    all_players = sorted(set(d_this["player"].tolist() + (d_prev["player"].tolist() if not d_prev.empty else [])))
 
     player_rows = ""
     for player in all_players:
         p_this = d_this[d_this["player"] == player]
-        p_prev = d_prev[d_prev["player"] == player]
+        p_prev = d_prev[d_prev["player"] == player] if not d_prev.empty else pd.DataFrame()
         position = POSITION_PAR_JOUEUR.get(player, "Unknown")
 
         cells = ""
@@ -728,7 +732,7 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 </head>
 <body>
 <h1>Brothers Rugby - Session Comparison Report</h1>
-<p class="subtitle">Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}</p>
+<p class="subtitle">Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y') if prev is not None else 'N/A'}</p>
 <h2>Team Summary</h2>
 <table>
 <thead><tr><th>Metric</th><th>Group</th><th>This session</th><th>Prev session</th><th>Trend</th></tr></thead>
