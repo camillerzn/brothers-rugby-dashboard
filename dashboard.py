@@ -35,6 +35,7 @@ POSITION_PAR_JOUEUR = {
     "Remi":       "Forwards",
     "George":     "Forwards",
     "Noah":       "Forwards",
+    "Jeremiah":   "Forwards",
     "Fus":        "Backs",
     "Prass":      "Backs",
     "Della":      "Backs",
