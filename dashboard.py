@@ -617,25 +617,13 @@ def export_comparison_pdf(n_clicks, ref_date):
         return None
 
     ref = pd.to_datetime(ref_date)
+    prev = ref - pd.Timedelta(weeks=1)
 
-    def get_day(reference, weekday):
-        days_ahead = weekday - reference.weekday()
-        if days_ahead > 0:
-            days_ahead -= 7
-        return reference + pd.Timedelta(days=days_ahead)
+    d_this = df[df["date"] == ref].copy()
+    d_prev = df[df["date"] == prev].copy()
 
-    tue_this  = get_day(ref, 1)
-    thu_this  = get_day(ref, 3)
-    tue_prev  = tue_this - pd.Timedelta(weeks=1)
-    thu_prev  = thu_this - pd.Timedelta(weeks=1)
-
-    def get_session(date):
-        return df[df["date"] == date].copy()
-
-    d_tue_this = get_session(tue_this)
-    d_thu_this = get_session(thu_this)
-    d_tue_prev = get_session(tue_prev)
-    d_thu_prev = get_session(thu_prev)
+    if d_this.empty and d_prev.empty:
+        return None
 
     metrics = [
         ("TD", "Total Distance (m)"),
@@ -646,10 +634,10 @@ def export_comparison_pdf(n_clicks, ref_date):
         ("decel_min", "Decel/min"),
     ]
 
-    def trend_arrow(val, ref):
-        if val == "-" or ref == "-" or ref == 0:
+    def trend_arrow(val, ref_val):
+        if val == "-" or ref_val == "-" or ref_val == 0:
             return "-"
-        pct = round((val - ref) / ref * 100, 1)
+        pct = round((val - ref_val) / ref_val * 100, 1)
         if pct >= 5:
             return f'<span style="color:#2e7d32; font-weight:700">▲ {pct:+.1f}%</span>'
         elif pct <= -5:
@@ -657,51 +645,50 @@ def export_comparison_pdf(n_clicks, ref_date):
         else:
             return f'<span style="color:#f57c00; font-weight:700">→ {pct:+.1f}%</span>'
 
-    def build_session_table(d_this, d_prev, session_label, date_this, date_prev):
-        if d_this.empty and d_prev.empty:
-            return f"<p>No data found for {session_label}.</p>"
-
-        all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
-
-        header = f"""
-        <h3>{session_label} — {date_this.strftime('%d/%m/%Y')} vs {date_prev.strftime('%d/%m/%Y')}</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>Player</th>
-                    <th>Position</th>
-                    {''.join(f'<th>{label}<br><small>This</small></th><th>{label}<br><small>Prev</small></th><th>Trend</th>' for _, label in metrics)}
-                </tr>
-            </thead>
-            <tbody>"""
-
+    # Résumé équipe
+    def team_summary_rows(d):
         rows = ""
-        for player in all_players:
-            p_this = d_this[d_this["player"] == player]
-            p_prev = d_prev[d_prev["player"] == player]
-            position = POSITION_PAR_JOUEUR.get(player, "Unknown")
-
-            cells = ""
-            for col, _ in metrics:
-                val_this = round(p_this[col].mean(), 1) if not p_this.empty else "-"
-                val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty else "-"
-                arrow = trend_arrow(val_this, val_prev)
-                cells += f"""
-                    <td>{val_this}</td>
-                    <td>{val_prev}</td>
-                    <td>{arrow}</td>"""
-
+        for col, label in metrics:
+            avg  = round(d[col].mean(), 1) if not d.empty else "-"
+            fwd  = round(d[d["position"] == "Forwards"][col].mean(), 1) if not d[d["position"] == "Forwards"].empty else "-"
+            bck  = round(d[d["position"] == "Backs"][col].mean(), 1) if not d[d["position"] == "Backs"].empty else "-"
             rows += f"""
             <tr>
-                <td><strong>{player}</strong></td>
-                <td>{position}</td>
-                {cells}
+                <td>{label}</td>
+                <td>{avg}</td>
+                <td>{fwd}</td>
+                <td>{bck}</td>
             </tr>"""
+        return rows
 
-        return header + rows + "</tbody></table>"
+    team_this = team_summary_rows(d_this)
+    team_prev = team_summary_rows(d_prev)
 
-    tuesday_table  = build_session_table(d_tue_this, d_tue_prev, "Tuesday", tue_this, tue_prev)
-    thursday_table = build_session_table(d_thu_this, d_thu_prev, "Thursday", thu_this, thu_prev)
+    # Comparaison joueurs
+    all_players = sorted(set(d_this["player"].tolist() + d_prev["player"].tolist()))
+
+    player_rows = ""
+    for player in all_players:
+        p_this = d_this[d_this["player"] == player]
+        p_prev = d_prev[d_prev["player"] == player]
+        position = POSITION_PAR_JOUEUR.get(player, "Unknown")
+
+        cells = ""
+        for col, _ in metrics:
+            val_this = round(p_this[col].mean(), 1) if not p_this.empty else "-"
+            val_prev = round(p_prev[col].mean(), 1) if not p_prev.empty else "-"
+            arrow = trend_arrow(val_this, val_prev)
+            cells += f"""
+                <td>{val_this}</td>
+                <td>{val_prev}</td>
+                <td>{arrow}</td>"""
+
+        player_rows += f"""
+        <tr>
+            <td><strong>{player}</strong></td>
+            <td>{position}</td>
+            {cells}
+        </tr>"""
 
     html_content = f"""
     <!DOCTYPE html>
@@ -719,15 +706,38 @@ def export_comparison_pdf(n_clicks, ref_date):
         td {{ padding: 5px 4px; border-bottom: 1px solid #eee; text-align: center; }}
         td:first-child, td:nth-child(2) {{ text-align: left; }}
         tr:nth-child(even) {{ background: #f7f9fc; }}
+        .badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 6px; font-size: 9px; margin-left: 4px; }}
     </style>
     </head>
     <body>
-        <h1>Brothers Rugby — Week Comparison Report</h1>
-        <p class="subtitle">Reference week ending: {ref.strftime('%d/%m/%Y')}</p>
-        <h2>Tuesday Session</h2>
-        {tuesday_table}
-        <h2>Thursday Session</h2>
-        {thursday_table}
+        <h1>Brothers Rugby — Session Comparison Report</h1>
+        <p class="subtitle">
+            Session: {ref.strftime('%d/%m/%Y')} vs {prev.strftime('%d/%m/%Y')}
+        </p>
+
+        <h2>Team Summary — {ref.strftime('%d/%m/%Y')}</h2>
+        <table>
+            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
+            <tbody>{team_this}</tbody>
+        </table>
+
+        <h2>Team Summary — {prev.strftime('%d/%m/%Y')}</h2>
+        <table>
+            <thead><tr><th>Metric</th><th>Team avg</th><th>Forwards avg</th><th>Backs avg</th></tr></thead>
+            <tbody>{team_prev}</tbody>
+        </table>
+
+        <h2>Player Comparison</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Position</th>
+                    {''.join(f'<th>{label}<br><small>This</small></th><th>{label}<br><small>Prev</small></th><th>Trend</th>' for _, label in metrics)}
+                </tr>
+            </thead>
+            <tbody>{player_rows}</tbody>
+        </table>
     </body>
     </html>
     """
