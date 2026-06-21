@@ -684,6 +684,34 @@ def export_comparison_pdf(n_clicks, ref_date):
                 <td>{arrow}</td>
             </tr>"""
 
+    # Section ratio HSR / TD pour Forwards et Backs
+    def hsr_td_ratio(mask_df):
+        if mask_df.empty:
+            return None
+        td_mean = mask_df["TD"].mean()
+        hsr_mean = mask_df["HSR"].mean()
+        if pd.isna(td_mean) or pd.isna(hsr_mean) or td_mean == 0:
+            return None
+        return round(hsr_mean / td_mean * 100, 1)
+
+    ratio_rows = ""
+    for label_group, mask_this, mask_prev in [
+        ("Forwards", d_this[d_this["position"] == "Forwards"], d_prev[d_prev["position"] == "Forwards"]),
+        ("Backs", d_this[d_this["position"] == "Backs"], d_prev[d_prev["position"] == "Backs"]),
+    ]:
+        ratio_this = hsr_td_ratio(mask_this)
+        ratio_prev = hsr_td_ratio(mask_prev)
+        ratio_this_label = f"{ratio_this}%" if ratio_this is not None else "-"
+        ratio_prev_label = f"{ratio_prev}%" if ratio_prev is not None else "-"
+        arrow = trend_arrow(ratio_this, ratio_prev)
+        ratio_rows += f"""
+        <tr>
+            <td>{label_group}</td>
+            <td>{ratio_this_label}</td>
+            <td>{ratio_prev_label}</td>
+            <td>{arrow}</td>
+        </tr>"""
+
     all_players = sorted(set(d_this["player"].tolist() + (d_prev["player"].tolist() if not d_prev.empty else [])))
 
     player_rows = ""
@@ -737,6 +765,11 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 <table>
 <thead><tr><th>Metric</th><th>Group</th><th>This session</th><th>Prev session</th><th>Trend</th></tr></thead>
 <tbody>{team_rows}</tbody>
+</table>
+<h2>HSR / Total Distance Ratio</h2>
+<table>
+<thead><tr><th>Group</th><th>This session</th><th>Prev session</th><th>Trend</th></tr></thead>
+<tbody>{ratio_rows}</tbody>
 </table>
 <h2>Player Comparison</h2>
 <table>
