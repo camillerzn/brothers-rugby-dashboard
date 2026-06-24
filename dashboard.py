@@ -10,6 +10,7 @@ import os
 import json
 import base64
 import tempfile
+import plotly.io as pio
 from weasyprint import HTML as WeasyHTML
 
 COULEURS = {
@@ -225,6 +226,51 @@ app.layout = html.Div(style={
 ])
 
 
+# ── Helpers graphiques pour le PDF ──────────────────────────────────────────
+
+def fig_to_base64(fig):
+    img_bytes = pio.to_image(fig, format="png", width=860, height=280, scale=2)
+    return base64.b64encode(img_bytes).decode()
+
+
+def player_trend_fig(dp, col, title, color):
+    """Courbe d'un joueur dans le temps + ligne de moyenne personnelle."""
+    all_vals = df[df["player"] == dp["player"].iloc[0]][col].dropna()
+    perso_avg = round(all_vals.mean(), 1) if not all_vals.empty else None
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=dp["date"], y=dp[col],
+        mode="lines+markers",
+        line=dict(color=color, width=2),
+        marker=dict(size=5),
+        name=title,
+    ))
+    if perso_avg is not None:
+        fig.add_hline(
+            y=perso_avg,
+            line_dash="dash",
+            line_color="#999",
+            annotation_text=f"Avg: {perso_avg}",
+            annotation_position="top left",
+            annotation_font_size=9,
+        )
+    fig.update_layout(
+        title=dict(text=title, font=dict(size=12, color=color)),
+        paper_bgcolor="white",
+        plot_bgcolor="#f7f9fc",
+        font=dict(color="#111", size=9),
+        margin=dict(l=40, r=20, t=36, b=28),
+        xaxis=dict(gridcolor="#ddd", tickformat="%d/%m/%y"),
+        yaxis=dict(gridcolor="#ddd"),
+        showlegend=False,
+        height=280,
+    )
+    return fig
+
+
+# ── Callback principal ───────────────────────────────────────────────────────
+
 @app.callback(
     Output("kpis-acwr", "children"),
     Output("kpis", "children"),
@@ -307,25 +353,19 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
 
         moyenne_par_poste = (
             dff.groupby(["date", "position"])[col]
-            .mean()
-            .reset_index()
-            .sort_values("date")
+            .mean().reset_index().sort_values("date")
         )
         moyenne_par_poste[col] = (
             moyenne_par_poste.groupby("position")[col]
             .transform(lambda x: x.rolling(window=3, min_periods=1).mean())
         )
 
-        couleurs_postes = {
-            "Forwards": "#FF6B35",
-            "Backs": "#4ECDC4",
-        }
+        couleurs_postes = {"Forwards": "#FF6B35", "Backs": "#4ECDC4"}
 
         for poste in sorted(dff["position"].unique()):
             d_poste = moyenne_par_poste[moyenne_par_poste["position"] == poste]
             fig.add_trace(go.Scatter(
-                x=d_poste["date"],
-                y=d_poste[col],
+                x=d_poste["date"], y=d_poste[col],
                 name=f"Avg {poste}",
                 mode="lines+markers",
                 line=dict(width=2, dash="dash", color=couleurs_postes.get(poste, "white")),
@@ -342,9 +382,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
             xaxis=dict(gridcolor=COULEURS["gris"]),
             yaxis=dict(gridcolor=COULEURS["gris"]),
             yaxis2=dict(
-                overlaying="y",
-                side="right",
-                showgrid=False,
+                overlaying="y", side="right", showgrid=False,
                 title=dict(text="Avg by position", font=dict(color="white")),
                 tickfont=dict(color="white"),
             ),
@@ -419,6 +457,8 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
 
     return kpis_acwr, kpis, graphs
 
+
+# ── Weekly Report PDF ────────────────────────────────────────────────────────
 
 @app.callback(
     Output("download-rapport", "data"),
@@ -545,6 +585,12 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <td>{arrow}</td>
             </tr>"""
 
+        # Graphiques du joueur
+        g_td  = fig_to_base64(player_trend_fig(dp, "TD",        "Total Distance (m)", "#4A90D9"))
+        g_hsr = fig_to_base64(player_trend_fig(dp, "HSR",       "HSR (m)",            "#4ECDC4"))
+        g_sd  = fig_to_base64(player_trend_fig(dp, "SD",        "Sprint Distance (m)","#FFE66D"))
+        g_ts  = fig_to_base64(player_trend_fig(dp, "top_Speed", "Top Speed (m/s)",    "#FF6B35"))
+
         player_cards += f"""
         <div class="player-card">
             <h3>{player} <span class="position-badge">{position}</span>
@@ -563,6 +609,12 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 </thead>
                 <tbody>{rows}</tbody>
             </table>
+            <div class="graphs-grid">
+                <img src="data:image/png;base64,{g_td}">
+                <img src="data:image/png;base64,{g_hsr}">
+                <img src="data:image/png;base64,{g_sd}">
+                <img src="data:image/png;base64,{g_ts}">
+            </div>
         </div>"""
 
     html_content = f"""<!DOCTYPE html>
@@ -580,7 +632,10 @@ th {{ background: #4A90D9; color: white; padding: 8px; text-align: left; font-si
 td {{ padding: 7px 8px; border-bottom: 1px solid #eee; }}
 tr:nth-child(even) {{ background: #f7f9fc; }}
 .position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
-.player-card {{ margin-bottom: 28px; page-break-inside: avoid; }}
+.player-card {{ margin-bottom: 28px; page-break-after: always; }}
+.player-card:last-child {{ page-break-after: avoid; }}
+.graphs-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }}
+.graphs-grid img {{ width: 100%; border: 1px solid #ddd; border-radius: 4px; }}
 </style>
 </head>
 <body>
@@ -610,6 +665,8 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
     return dcc.send_bytes(pdf_bytes, filename)
 
 
+# ── Comparison Report PDF ────────────────────────────────────────────────────
+
 @app.callback(
     Output("download-comparaison", "data"),
     Input("btn-comparaison", "n_clicks"),
@@ -625,7 +682,6 @@ def export_comparison_pdf(n_clicks, ref_date):
 
     d_this = df[df["date"].dt.normalize() == ref].copy()
 
-    # Cherche la session avec le même jour de semaine, la plus proche de J-7
     same_weekday = df[df["date"].dt.weekday == ref.weekday()]
     dates_candidates = same_weekday["date"].dt.normalize().unique()
     dates_candidates = [d for d in dates_candidates if d < ref]
@@ -684,7 +740,6 @@ def export_comparison_pdf(n_clicks, ref_date):
                 <td>{arrow}</td>
             </tr>"""
 
-    # Section ratio HSR / TD pour Forwards et Backs
     def hsr_td_ratio(mask_df):
         if mask_df.empty:
             return None
