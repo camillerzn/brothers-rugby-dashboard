@@ -8,3 +8,4 @@ gunicorn
 gspread
 google-auth
 weasyprint
+kaleido
