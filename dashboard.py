@@ -10,7 +10,11 @@ import os
 import json
 import base64
 import tempfile
-import plotly.io as pio
+import io
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from weasyprint import HTML as WeasyHTML
 
 COULEURS = {
@@ -226,47 +230,41 @@ app.layout = html.Div(style={
 ])
 
 
-# ── Helpers graphiques pour le PDF ──────────────────────────────────────────
+# ── Helper matplotlib (remplace Kaleido) ────────────────────────────────────
 
-def fig_to_base64(fig):
-    img_bytes = pio.to_image(fig, format="png", width=860, height=280, scale=2)
-    return base64.b64encode(img_bytes).decode()
+def player_trend_fig_b64(dp, col, title, color):
+    fig, ax = plt.subplots(figsize=(8, 2.8))
+    fig.patch.set_facecolor("#f7f9fc")
+    ax.set_facecolor("#f7f9fc")
 
+    dates = dp["date"].tolist()
+    vals  = dp[col].tolist()
 
-def player_trend_fig(dp, col, title, color):
-    """Courbe d'un joueur dans le temps + ligne de moyenne personnelle."""
+    ax.plot(dates, vals, color=color, linewidth=2, marker="o", markersize=5, zorder=3)
+    ax.fill_between(dates, vals, alpha=0.08, color=color)
+
     all_vals = df[df["player"] == dp["player"].iloc[0]][col].dropna()
-    perso_avg = round(all_vals.mean(), 1) if not all_vals.empty else None
+    if not all_vals.empty:
+        perso_avg = round(all_vals.mean(), 1)
+        ax.axhline(y=perso_avg, color="#999", linestyle="--", linewidth=1.2, zorder=2)
+        ax.text(dates[0], perso_avg, f" Avg: {perso_avg}",
+                va="bottom", ha="left", fontsize=7, color="#666")
 
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=dp["date"], y=dp[col],
-        mode="lines+markers",
-        line=dict(color=color, width=2),
-        marker=dict(size=5),
-        name=title,
-    ))
-    if perso_avg is not None:
-        fig.add_hline(
-            y=perso_avg,
-            line_dash="dash",
-            line_color="#999",
-            annotation_text=f"Avg: {perso_avg}",
-            annotation_position="top left",
-            annotation_font_size=9,
-        )
-    fig.update_layout(
-        title=dict(text=title, font=dict(size=12, color=color)),
-        paper_bgcolor="white",
-        plot_bgcolor="#f7f9fc",
-        font=dict(color="#111", size=9),
-        margin=dict(l=40, r=20, t=36, b=28),
-        xaxis=dict(gridcolor="#ddd", tickformat="%d/%m/%y"),
-        yaxis=dict(gridcolor="#ddd"),
-        showlegend=False,
-        height=280,
-    )
-    return fig
+    ax.set_title(title, fontsize=10, color=color, fontweight="bold", pad=6)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m/%y"))
+    ax.xaxis.set_major_locator(mdates.AutoDateLocator())
+    fig.autofmt_xdate(rotation=30, ha="right")
+    ax.tick_params(labelsize=7)
+    ax.grid(True, color="#ddd", linewidth=0.5)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    plt.tight_layout(pad=0.5)
+
+    buf = io.BytesIO()
+    plt.savefig(buf, format="png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    buf.seek(0)
+    return base64.b64encode(buf.read()).decode()
 
 
 # ── Callback principal ───────────────────────────────────────────────────────
@@ -585,11 +583,10 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <td>{arrow}</td>
             </tr>"""
 
-        # Graphiques du joueur
-        g_td  = fig_to_base64(player_trend_fig(dp, "TD",        "Total Distance (m)", "#4A90D9"))
-        g_hsr = fig_to_base64(player_trend_fig(dp, "HSR",       "HSR (m)",            "#4ECDC4"))
-        g_sd  = fig_to_base64(player_trend_fig(dp, "SD",        "Sprint Distance (m)","#FFE66D"))
-        g_ts  = fig_to_base64(player_trend_fig(dp, "top_Speed", "Top Speed (m/s)",    "#FF6B35"))
+        g_td  = player_trend_fig_b64(dp, "TD",        "Total Distance (m)", "#4A90D9")
+        g_hsr = player_trend_fig_b64(dp, "HSR",       "HSR (m)",            "#4ECDC4")
+        g_sd  = player_trend_fig_b64(dp, "SD",        "Sprint Distance (m)","#E6B800")
+        g_ts  = player_trend_fig_b64(dp, "top_Speed", "Top Speed (m/s)",    "#FF6B35")
 
         player_cards += f"""
         <div class="player-card">
