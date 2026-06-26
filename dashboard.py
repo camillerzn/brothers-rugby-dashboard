@@ -15,7 +15,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-from weasyprint import HTML as WeasyHTML
+from playwright.sync_api import sync_playwright
+import tempfile
 
 COULEURS = {
     "bleu":  "#4A90D9",
@@ -652,15 +653,26 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 {player_cards}
 </body>
 </html>"""
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
 
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
-        WeasyHTML(string=html_content).write_pdf(f.name)
-        with open(f.name, "rb") as pdf_file:
-            pdf_bytes = pdf_file.read()
+    page.set_content(html_content, wait_until="load")
 
-    filename = f"brothers_rugby_{start_label.replace('/', '-')}_{end_label.replace('/', '-')}.pdf"
-    return dcc.send_bytes(pdf_bytes, filename)
+    pdf_bytes = page.pdf(
+        format="A4",
+        print_background=True,
+        margin={
+            "top": "10mm",
+            "bottom": "10mm",
+            "left": "10mm",
+            "right": "10mm"
+        }
+    )
 
+    browser.close()
+
+return dcc.send_bytes(pdf_bytes, filename)
 
 # ── Comparison Report PDF ────────────────────────────────────────────────────
 
@@ -831,13 +843,26 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 </body>
 </html>"""
 
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as f:
-        WeasyHTML(string=html_content).write_pdf(f.name)
-        with open(f.name, "rb") as pdf_file:
-            pdf_bytes = pdf_file.read()
+    with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
 
-    filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
-    return dcc.send_bytes(pdf_bytes, filename)
+    page.set_content(html_content, wait_until="load")
+
+    pdf_bytes = page.pdf(
+        format="A4",
+        print_background=True,
+        margin={
+            "top": "10mm",
+            "bottom": "10mm",
+            "left": "10mm",
+            "right": "10mm"
+        }
+    )
+
+    browser.close()
+
+return dcc.send_bytes(pdf_bytes, filename)
 
 
 if __name__ == "__main__":
