@@ -9,14 +9,12 @@ import dash_auth
 import os
 import json
 import base64
-import tempfile
 import io
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from playwright.sync_api import sync_playwright
-import tempfile
 
 COULEURS = {
     "bleu":  "#4A90D9",
@@ -68,7 +66,7 @@ def load_data():
     df = pd.DataFrame(data)
     df["date"] = pd.to_datetime(df["date"], dayfirst=True)
     df = df.sort_values(["player", "date"]).reset_index(drop=True)
-    for col in ["TD", "HSR", "SD", "top_Speed", "accel_min", "decel_min"]:
+    for col in ["TD", "HSR", "SD", "top_Speed", "accel_min", "decel_min", "m_min"]:
         df[col] = pd.to_numeric(df[col], errors="coerce")
     df["player"] = df["player"].str.replace("*", "", regex=False).str.strip()
     df["position"] = df["player"].map(POSITION_PAR_JOUEUR).fillna("Unknown")
@@ -170,7 +168,7 @@ app.layout = html.Div(style={
     }),
     html.Div(id="kpis", style={
         "display": "grid",
-        "gridTemplateColumns": "repeat(6, 1fr)",
+        "gridTemplateColumns": "repeat(7, 1fr)",
         "gap": "12px",
         "marginBottom": "24px"
     }),
@@ -231,7 +229,23 @@ app.layout = html.Div(style={
 ])
 
 
-# ── Helper matplotlib (remplace Kaleido) ────────────────────────────────────
+# ── Helper PDF via Playwright ────────────────────────────────────────────────
+
+def html_to_pdf(html_content):
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.set_content(html_content, wait_until="load")
+        pdf_bytes = page.pdf(
+            format="A4",
+            print_background=True,
+            margin={"top": "10mm", "bottom": "10mm", "left": "10mm", "right": "10mm"}
+        )
+        browser.close()
+    return pdf_bytes
+
+
+# ── Helper matplotlib pour les graphiques joueur ─────────────────────────────
 
 def player_trend_fig_b64(dp, col, title, color):
     fig, ax = plt.subplots(figsize=(8, 2.8))
@@ -402,6 +416,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
     ts  = round(dff["top_Speed"].mean(), 2) if len(dff) else 0
     am  = round(dff["accel_min"].mean(), 2) if len(dff) else 0
     dm  = round(dff["decel_min"].mean(), 2) if len(dff) else 0
+    mm  = round(dff["m_min"].mean(), 1) if len(dff) else 0
 
     today = pd.to_datetime(end_date) if end_date else dff["date"].max()
     aigu_window = today - pd.Timedelta(days=7)
@@ -443,6 +458,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         kpi_card("Top Speed (m/s)", ts, "#FF6B35"),
         kpi_card("Accel/min >4m/s2", am, "#C77DFF"),
         kpi_card("Decel/min >4m/s2", dm, "#FF6B6B"),
+        kpi_card("m/min", mm, "#00B4D8"),
     ]
 
     graphs = [
@@ -452,6 +468,7 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         make_graph("top_Speed", "Top Speed (m/s)", "#FF6B35"),
         make_graph("accel_min", "Accel/min >4m/s2", "#C77DFF"),
         make_graph("decel_min", "Decel/min >4m/s2", "#FF6B6B"),
+        make_graph("m_min", "m/min", "#00B4D8"),
     ]
 
     return kpis_acwr, kpis, graphs
@@ -537,7 +554,8 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     team_rows = ""
     for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                         ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
-                        ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
+                        ("accel_min", "Accel/min"), ("decel_min", "Decel/min"),
+                        ("m_min", "m/min")]:
         fwd = round(dff[dff["position"] == "Forwards"][col].mean(), 1)
         bck = round(dff[dff["position"] == "Backs"][col].mean(), 1)
         avg = round(dff[col].mean(), 1)
@@ -572,7 +590,8 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         rows = ""
         for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
-                            ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
+                            ("accel_min", "Accel/min"), ("decel_min", "Decel/min"),
+                            ("m_min", "m/min")]:
             session_val = round(dp[col].mean(), 1) if not dp.empty and not np.isnan(dp[col].mean()) else "-"
             perso_avg   = round(df[df["player"] == player][col].mean(), 1)
             arrow = trend_arrow(session_val, perso_avg)
@@ -588,6 +607,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         g_hsr = player_trend_fig_b64(dp, "HSR",       "HSR (m)",            "#4ECDC4")
         g_sd  = player_trend_fig_b64(dp, "SD",        "Sprint Distance (m)","#E6B800")
         g_ts  = player_trend_fig_b64(dp, "top_Speed", "Top Speed (m/s)",    "#FF6B35")
+        g_mm  = player_trend_fig_b64(dp, "m_min",     "m/min",              "#00B4D8")
 
         player_cards += f"""
         <div class="player-card">
@@ -612,6 +632,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <img src="data:image/png;base64,{g_hsr}">
                 <img src="data:image/png;base64,{g_sd}">
                 <img src="data:image/png;base64,{g_ts}">
+                <img src="data:image/png;base64,{g_mm}">
             </div>
         </div>"""
 
@@ -653,29 +674,11 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 {player_cards}
 </body>
 </html>"""
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
 
-        page.set_content(html_content, wait_until="load")
+    pdf_bytes = html_to_pdf(html_content)
+    filename = f"brothers_rugby_{start_label.replace('/', '-')}_{end_label.replace('/', '-')}.pdf"
+    return dcc.send_bytes(pdf_bytes, filename)
 
-        pdf_bytes = page.pdf(
-            format="A4",
-            print_background=True,
-            margin={
-                "top": "10mm",
-                "bottom": "10mm",
-                "left": "10mm",
-                "right": "10mm"
-            }
-        )
-
-        browser.close()
-
-    return dcc.send_bytes(
-        pdf_bytes,
-        filename=f"Comparison_Report_{ref.strftime('%Y-%m-%d')}.pdf"
-    )
 
 # ── Comparison Report PDF ────────────────────────────────────────────────────
 
@@ -715,6 +718,7 @@ def export_comparison_pdf(n_clicks, ref_date):
         ("top_Speed", "Top Speed (m/s)"),
         ("accel_min", "Accel/min"),
         ("decel_min", "Decel/min"),
+        ("m_min", "m/min"),
     ]
 
     def trend_arrow(val, ref_val):
@@ -846,26 +850,9 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 </body>
 </html>"""
 
-    with sync_playwright() as p:
-    browser = p.chromium.launch()
-    page = browser.new_page()
-
-    page.set_content(html_content, wait_until="load")
-
-    pdf_bytes = page.pdf(
-        format="A4",
-        print_background=True,
-        margin={
-            "top": "10mm",
-            "bottom": "10mm",
-            "left": "10mm",
-            "right": "10mm"
-        }
-    )
-
-    browser.close()
-
-return dcc.send_bytes(pdf_bytes, filename)
+    pdf_bytes = html_to_pdf(html_content)
+    filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
+    return dcc.send_bytes(pdf_bytes, filename)
 
 
 if __name__ == "__main__":
