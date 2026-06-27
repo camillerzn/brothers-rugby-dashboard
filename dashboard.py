@@ -248,39 +248,38 @@ def html_to_pdf(html_content):
 # ── Helper matplotlib pour les graphiques joueur ─────────────────────────────
 
 def player_trend_fig_b64(dp, col, title, color):
-    fig, ax = plt.subplots(figsize=(8, 2.8))
-    fig.patch.set_facecolor("#f7f9fc")
+    fig, ax = plt.subplots(figsize=(14, 4))
+    fig.patch.set_facecolor("#ffffff")
     ax.set_facecolor("#f7f9fc")
 
     dates = dp["date"].tolist()
     vals  = dp[col].tolist()
 
-    ax.plot(dates, vals, color=color, linewidth=2, marker="o", markersize=5, zorder=3)
-    ax.fill_between(dates, vals, alpha=0.08, color=color)
+    ax.plot(dates, vals, color=color, linewidth=2.5, marker="o", markersize=7, zorder=3)
+    ax.fill_between(dates, vals, alpha=0.1, color=color)
 
     all_vals = df[df["player"] == dp["player"].iloc[0]][col].dropna()
     if not all_vals.empty:
         perso_avg = round(all_vals.mean(), 1)
-        ax.axhline(y=perso_avg, color="#999", linestyle="--", linewidth=1.2, zorder=2)
+        ax.axhline(y=perso_avg, color="#999", linestyle="--", linewidth=1.5, zorder=2)
         ax.text(dates[0], perso_avg, f" Avg: {perso_avg}",
-                va="bottom", ha="left", fontsize=7, color="#666")
+                va="bottom", ha="left", fontsize=9, color="#666")
 
-    ax.set_title(title, fontsize=10, color=color, fontweight="bold", pad=6)
+    ax.set_title(title, fontsize=13, color=color, fontweight="bold", pad=8)
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m/%y"))
     ax.xaxis.set_major_locator(mdates.AutoDateLocator())
     fig.autofmt_xdate(rotation=30, ha="right")
-    ax.tick_params(labelsize=7)
-    ax.grid(True, color="#ddd", linewidth=0.5)
+    ax.tick_params(labelsize=9)
+    ax.grid(True, color="#ddd", linewidth=0.6)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    plt.tight_layout(pad=0.5)
+    plt.tight_layout(pad=0.8)
 
     buf = io.BytesIO()
     plt.savefig(buf, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
     buf.seek(0)
     return base64.b64encode(buf.read()).decode()
-
 
 # ── Callback principal ───────────────────────────────────────────────────────
 
@@ -653,7 +652,7 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 .position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
 .player-card {{ margin-bottom: 28px; page-break-after: always; }}
 .player-card:last-child {{ page-break-after: avoid; }}
-.graphs-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }}
+.graphs-grid {{display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 14px; }}
 .graphs-grid img {{ width: 100%; border: 1px solid #ddd; border-radius: 4px; }}
 </style>
 </head>
