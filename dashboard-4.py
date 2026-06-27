@@ -9,21 +9,21 @@ import dash_auth
 import os
 import json
 import base64
+import tempfile
 import io
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from playwright.sync_api import sync_playwright
-
-# ───────────────────────── CONFIG ───────────────────────── #
+import tempfile
 
 COULEURS = {
-    "bleu": "#4A90D9",
-    "noir": "#0A0A0A",
+    "bleu":  "#4A90D9",
+    "noir":  "#0A0A0A",
     "blanc": "#FFFFFF",
     "fonce": "#0D1B2A",
-    "gris": "#4A4A6A",
+    "gris":  "#4A4A6A",
 }
 
 SCOPES = [
@@ -32,69 +32,52 @@ SCOPES = [
 ]
 
 POSITION_PAR_JOUEUR = {
-    "D.Fraser": "Forwards",
-    "Tieli": "Forwards",
-    "W.Wilson": "Forwards",
-    "B.Hemps": "Forwards",
-    "Clifty": "Forwards",
-    "Leo": "Forwards",
-    "Remi": "Forwards",
-    "George": "Forwards",
-    "Noah": "Forwards",
-    "Jeremiah": "Forwards",
-    "Fus": "Backs",
-    "Prass": "Backs",
-    "Della": "Backs",
-    "Athen": "Backs",
-    "Kaelan": "Backs",
-    "H.Grant": "Backs",
+    "D.Fraser":   "Forwards",
+    "Tieli":      "Forwards",
+    "W.Wilson":   "Forwards",
+    "B.Hemps":    "Forwards",
+    "Clifty":     "Forwards",
+    "Leo":        "Forwards",
+    "Remi":       "Forwards",
+    "George":     "Forwards",
+    "Noah":       "Forwards",
+    "Jeremiah":   "Forwards",
+    "Fus":        "Backs",
+    "Prass":      "Backs",
+    "Della":      "Backs",
+    "Athen":      "Backs",
+    "Kaelan":     "Backs",
+    "H.Grant":    "Backs",
     "G.Urquhart": "Backs",
-    "Henry": "Backs",
-    "Guido": "Backs",
+    "Henry":      "Backs",
+    "Guido":      "Backs",
 }
-
-# ───────────────────────── DATA ───────────────────────── #
 
 def load_data():
     creds_json = os.environ.get("GOOGLE_CREDENTIALS")
-
     if creds_json:
         creds_info = json.loads(creds_json)
         creds = Credentials.from_service_account_info(creds_info, scopes=SCOPES)
     else:
         creds = Credentials.from_service_account_file(
-            os.path.join(os.path.dirname(__file__), "credentials.json"),
-            scopes=SCOPES
-        )
-
+            os.path.join(os.path.dirname(__file__), "credentials.json"), scopes=SCOPES)
     client = gspread.authorize(creds)
-    sheet = client.open_by_url(
-        "https://docs.google.com/spreadsheets/d/1thDPDieTXxL7qlnvx5BtJShPZmoON4e6KCs8uALK1-0/edit"
-    )
+    sheet = client.open_by_url("https://docs.google.com/spreadsheets/d/1thDPDieTXxL7qlnvx5BtJShPZmoON4e6KCs8uALK1-0/edit?gid=0#gid=0")
     worksheet = sheet.get_worksheet(0)
-
     data = worksheet.get_all_records()
     df = pd.DataFrame(data)
-
     df["date"] = pd.to_datetime(df["date"], dayfirst=True)
     df = df.sort_values(["player", "date"]).reset_index(drop=True)
-
-    cols = ["TD", "HSR", "SD", "top_Speed", "accel_min", "decel_min", "m_min"]
-    for c in cols:
-        df[c] = pd.to_numeric(df[c], errors="coerce")
-
+    for col in ["TD", "HSR", "SD", "top_Speed", "accel_min", "decel_min"]:
+        df[col] = pd.to_numeric(df[col], errors="coerce")
     df["player"] = df["player"].str.replace("*", "", regex=False).str.strip()
     df["position"] = df["player"].map(POSITION_PAR_JOUEUR).fillna("Unknown")
-
     return df
-
 
 df = load_data()
 players = sorted(df["player"].unique())
 positions = sorted(df["position"].unique())
 session_types = sorted(df["type"].unique())
-
-# ───────────────────────── APP ───────────────────────── #
 
 app = Dash(__name__, title="Brothers Rugby Dashboard")
 server = app.server
@@ -102,85 +85,77 @@ server = app.server
 VALID_USERS = {"admin": "brothers2026"}
 auth = dash_auth.BasicAuth(app, VALID_USERS)
 
-# ───────────────────────── LAYOUT ───────────────────────── #
+app.layout = html.Div(style={
+    "backgroundColor": COULEURS["noir"],
+    "minHeight": "100vh",
+    "fontFamily": "sans-serif",
+    "color": COULEURS["blanc"],
+    "padding": "24px",
+    "maxWidth": "1400px",
+    "margin": "0 auto"
+}, children=[
 
-app.layout = html.Div(
-    style={
-        "backgroundColor": COULEURS["noir"],
-        "minHeight": "100vh",
-        "fontFamily": "sans-serif",
-        "color": COULEURS["blanc"],
-        "padding": "24px",
-        "maxWidth": "1400px",
-        "margin": "0 auto",
-    },
-    children=[
+    html.H1("Brothers Rugby Dashboard", style={
+        "color": COULEURS["bleu"],
+        "fontSize": "28px",
+        "marginBottom": "24px"
+    }),
 
-        html.H1(
-            "Brothers Rugby Dashboard",
-            style={"color": COULEURS["bleu"], "fontSize": "28px", "marginBottom": "24px"},
-        ),
+    html.Div(style={
+        "display": "flex",
+        "gap": "24px",
+        "marginBottom": "24px",
+        "flexWrap": "wrap"
+    }, children=[
+        html.Div([
+            html.Label("Player", style={"color": COULEURS["gris"]}),
+            dcc.Dropdown(
+                id="filtre-player",
+                options=[{"label": p, "value": p} for p in players],
+                multi=True,
+                placeholder="All players",
+                style={"color": "#000", "minWidth": "200px"}
+            ),
+        ]),
+        html.Div([
+            html.Label("Position", style={"color": COULEURS["gris"]}),
+            dcc.Dropdown(
+                id="filtre-position",
+                options=[{"label": p, "value": p} for p in positions],
+                multi=True,
+                placeholder="All positions",
+                style={"color": "#000", "minWidth": "200px"}
+            ),
+        ]),
+        html.Div([
+            html.Label("Session type", style={"color": COULEURS["gris"]}),
+            dcc.Dropdown(
+                id="filtre-type",
+                options=[{"label": t, "value": t} for t in session_types],
+                multi=True,
+                placeholder="All types",
+                style={"color": "#000", "minWidth": "200px"}
+            ),
+        ]),
+        html.Div([
+            html.Label("Period", style={"color": COULEURS["gris"]}),
+            dcc.DatePickerRange(
+                id="filtre-date",
+                min_date_allowed=df["date"].min(),
+                max_date_allowed=df["date"].max(),
+                start_date=df["date"].min(),
+                end_date=df["date"].max(),
+                display_format="DD/MM/YYYY",
+            ),
+        ]),
+    ]),
 
-        html.Div(
-            style={
-                "display": "flex",
-                "gap": "24px",
-                "marginBottom": "24px",
-                "flexWrap": "wrap",
-            },
-            children=[
-                html.Div([
-                    html.Label("Player"),
-                    dcc.Dropdown(
-                        id="filtre-player",
-                        options=[{"label": p, "value": p} for p in players],
-                        multi=True,
-                    ),
-                ]),
-
-                html.Div([
-                    html.Label("Position"),
-                    dcc.Dropdown(
-                        id="filtre-position",
-                        options=[{"label": p, "value": p} for p in positions],
-                        multi=True,
-                    ),
-                ]),
-
-                html.Div([
-                    html.Label("Session type"),
-                    dcc.Dropdown(
-                        id="filtre-type",
-                        options=[{"label": t, "value": t} for t in session_types],
-                        multi=True,
-                    ),
-                ]),
-
-                html.Div([
-                    html.Label("Period"),
-                    dcc.DatePickerRange(
-                        id="filtre-date",
-                        min_date_allowed=df["date"].min(),
-                        max_date_allowed=df["date"].max(),
-                        start_date=df["date"].min(),
-                        end_date=df["date"].max(),
-                    ),
-                ]),
-            ],
-        ),
-
-        html.Div(id="kpis-acwr"),
-        html.Div(id="kpis"),
-        html.Div(id="graphs"),
-    ],
-)
-
-html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
+    html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
         "color": COULEURS["gris"],
         "fontSize": "13px",
         "marginBottom": "8px",
         "marginTop": "0"
-    }), 
+    }),
     html.Div(id="kpis-acwr", style={
         "display": "grid",
         "gridTemplateColumns": "repeat(4, 1fr)",
@@ -195,7 +170,7 @@ html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
     }),
     html.Div(id="kpis", style={
         "display": "grid",
-        "gridTemplateColumns": "repeat(7, 1fr)",
+        "gridTemplateColumns": "repeat(6, 1fr)",
         "gap": "12px",
         "marginBottom": "24px"
     }),
@@ -253,98 +228,45 @@ html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
         "gap": "16px",
         "marginTop": "24px"
     }),
-
-    html.Div([
-        html.Label("Season report player", style={"color": COULEURS["gris"], "fontSize": "12px"}),
-
-        dcc.Dropdown(
-        id="season-player",
-        options=[{"label": p, "value": p} for p in players],
-        placeholder="Select player",
-        style={"color": "#000", "minWidth": "220px"}
-    ),
-
-    html.Button(
-        "Export Season Report (PDF)",
-        id="btn-season",
-        style={
-            "marginTop": "8px",
-            "backgroundColor": "#FF8C00",
-            "color": "white",
-            "border": "none",
-            "borderRadius": "8px",
-            "padding": "10px 20px",
-            "cursor": "pointer",
-            "fontSize": "14px",
-            "fontWeight": "600",
-        }
-    ),
-
-    dcc.Download(id="download-season"),
 ])
 
 
-# ── Helper PDF via Playwright ────────────────────────────────────────────────
-
-def html_to_pdf(html_content):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.set_content(html_content, wait_until="load")
-        pdf_bytes = page.pdf(
-            format="A4",
-            print_background=True,
-            margin={"top": "10mm", "bottom": "10mm", "left": "10mm", "right": "10mm"}
-        )
-        browser.close()
-    return pdf_bytes
-
-
-# Helper stat season 
-
-def season_stats(dp, col):
-    return {
-        "mean": round(dp[col].mean(), 2),
-        "max": round(dp[col].max(), 2),
-        "min": round(dp[col].min(), 2),
-    }
-
-    
-# ── Helper matplotlib pour les graphiques joueur ─────────────────────────────
+# ── Helper matplotlib (remplace Kaleido) ────────────────────────────────────
 
 def player_trend_fig_b64(dp, col, title, color):
-    fig, ax = plt.subplots(figsize=(14, 4))
-    fig.patch.set_facecolor("#ffffff")
+    fig, ax = plt.subplots(figsize=(8, 2.8))
+    fig.patch.set_facecolor("#f7f9fc")
     ax.set_facecolor("#f7f9fc")
 
     dates = dp["date"].tolist()
     vals  = dp[col].tolist()
 
-    ax.plot(dates, vals, color=color, linewidth=2.5, marker="o", markersize=7, zorder=3)
-    ax.fill_between(dates, vals, alpha=0.1, color=color)
+    ax.plot(dates, vals, color=color, linewidth=2, marker="o", markersize=5, zorder=3)
+    ax.fill_between(dates, vals, alpha=0.08, color=color)
 
     all_vals = df[df["player"] == dp["player"].iloc[0]][col].dropna()
     if not all_vals.empty:
         perso_avg = round(all_vals.mean(), 1)
-        ax.axhline(y=perso_avg, color="#999", linestyle="--", linewidth=1.5, zorder=2)
+        ax.axhline(y=perso_avg, color="#999", linestyle="--", linewidth=1.2, zorder=2)
         ax.text(dates[0], perso_avg, f" Avg: {perso_avg}",
-                va="bottom", ha="left", fontsize=9, color="#666")
+                va="bottom", ha="left", fontsize=7, color="#666")
 
-    ax.set_title(title, fontsize=13, color=color, fontweight="bold", pad=8)
+    ax.set_title(title, fontsize=10, color=color, fontweight="bold", pad=6)
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%d/%m/%y"))
     ax.xaxis.set_major_locator(mdates.AutoDateLocator())
     fig.autofmt_xdate(rotation=30, ha="right")
-    ax.tick_params(labelsize=9)
-    ax.grid(True, color="#ddd", linewidth=0.6)
+    ax.tick_params(labelsize=7)
+    ax.grid(True, color="#ddd", linewidth=0.5)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    plt.tight_layout(pad=0.8)
+    plt.tight_layout(pad=0.5)
 
     buf = io.BytesIO()
     plt.savefig(buf, format="png", dpi=150, bbox_inches="tight")
     plt.close(fig)
     buf.seek(0)
     return base64.b64encode(buf.read()).decode()
+
 
 # ── Callback principal ───────────────────────────────────────────────────────
 
@@ -480,7 +402,6 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
     ts  = round(dff["top_Speed"].mean(), 2) if len(dff) else 0
     am  = round(dff["accel_min"].mean(), 2) if len(dff) else 0
     dm  = round(dff["decel_min"].mean(), 2) if len(dff) else 0
-    mm  = round(dff["m_min"].mean(), 1) if len(dff) else 0
 
     today = pd.to_datetime(end_date) if end_date else dff["date"].max()
     aigu_window = today - pd.Timedelta(days=7)
@@ -522,7 +443,6 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         kpi_card("Top Speed (m/s)", ts, "#FF6B35"),
         kpi_card("Accel/min >4m/s2", am, "#C77DFF"),
         kpi_card("Decel/min >4m/s2", dm, "#FF6B6B"),
-        kpi_card("m/min", mm, "#00B4D8"),
     ]
 
     graphs = [
@@ -532,53 +452,9 @@ def update(players_sel, positions_sel, types_sel, start_date, end_date):
         make_graph("top_Speed", "Top Speed (m/s)", "#FF6B35"),
         make_graph("accel_min", "Accel/min >4m/s2", "#C77DFF"),
         make_graph("decel_min", "Decel/min >4m/s2", "#FF6B6B"),
-        make_graph("m_min", "m/min", "#00B4D8"),
     ]
 
     return kpis_acwr, kpis, graphs
-@app.callback(
-    Output("download-season", "data"),
-    Input("btn-season", "n_clicks"),
-    Input("season-player", "value"),
-    prevent_initial_call=True
-)
-def season_report(n_clicks, player):
-
-    if not player:
-        return None
-
-    dp = df[df["player"] == player]
-
-    if dp.empty:
-        return None
-
-    html_content = f"""
-    <html>
-    <head>
-    <style>
-        body {{ font-family: Arial; padding: 30px; }}
-        h1 {{ color: #4A90D9; }}
-        p {{ font-size: 14px; }}
-    </style>
-    </head>
-
-    <body>
-        <h1>Season Report - {player}</h1>
-
-        <p><b>Total Distance:</b> {dp['TD'].sum():.0f}</p>
-        <p><b>HSR:</b> {dp['HSR'].sum():.0f}</p>
-        <p><b>Sprint Distance:</b> {dp['SD'].sum():.0f}</p>
-        <p><b>Top Speed Avg:</b> {dp['top_Speed'].mean():.2f}</p>
-        <p><b>Accel/min:</b> {dp['accel_min'].mean():.2f}</p>
-        <p><b>Decel/min:</b> {dp['decel_min'].mean():.2f}</p>
-        <p><b>m/min:</b> {dp['m_min'].mean():.2f}</p>
-    </body>
-    </html>
-    """
-
-    pdf = html_to_pdf(html_content)
-
-    return dcc.send_bytes(pdf, f"season_report_{player}.pdf")
 
 
 # ── Weekly Report PDF ────────────────────────────────────────────────────────
@@ -661,8 +537,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
     team_rows = ""
     for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                         ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
-                        ("accel_min", "Accel/min"), ("decel_min", "Decel/min"),
-                        ("m_min", "m/min")]:
+                        ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
         fwd = round(dff[dff["position"] == "Forwards"][col].mean(), 1)
         bck = round(dff[dff["position"] == "Backs"][col].mean(), 1)
         avg = round(dff[col].mean(), 1)
@@ -697,8 +572,7 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         rows = ""
         for col, label in [("TD", "Total Distance (m)"), ("HSR", "HSR (m)"),
                             ("SD", "Sprint Distance (m)"), ("top_Speed", "Top Speed (m/s)"),
-                            ("accel_min", "Accel/min"), ("decel_min", "Decel/min"),
-                            ("m_min", "m/min")]:
+                            ("accel_min", "Accel/min"), ("decel_min", "Decel/min")]:
             session_val = round(dp[col].mean(), 1) if not dp.empty and not np.isnan(dp[col].mean()) else "-"
             perso_avg   = round(df[df["player"] == player][col].mean(), 1)
             arrow = trend_arrow(session_val, perso_avg)
@@ -714,7 +588,6 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
         g_hsr = player_trend_fig_b64(dp, "HSR",       "HSR (m)",            "#4ECDC4")
         g_sd  = player_trend_fig_b64(dp, "SD",        "Sprint Distance (m)","#E6B800")
         g_ts  = player_trend_fig_b64(dp, "top_Speed", "Top Speed (m/s)",    "#FF6B35")
-        g_mm  = player_trend_fig_b64(dp, "m_min",     "m/min",              "#00B4D8")
 
         player_cards += f"""
         <div class="player-card">
@@ -739,7 +612,6 @@ def export_pdf(n_clicks, players_sel, positions_sel, types_sel, start_date, end_
                 <img src="data:image/png;base64,{g_hsr}">
                 <img src="data:image/png;base64,{g_sd}">
                 <img src="data:image/png;base64,{g_ts}">
-                <img src="data:image/png;base64,{g_mm}">
             </div>
         </div>"""
 
@@ -760,7 +632,7 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 .position-badge {{ background: #4A90D9; color: white; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: normal; margin-left: 8px; }}
 .player-card {{ margin-bottom: 28px; page-break-after: always; }}
 .player-card:last-child {{ page-break-after: avoid; }}
-.graphs-grid {{display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 14px; }}
+.graphs-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }}
 .graphs-grid img {{ width: 100%; border: 1px solid #ddd; border-radius: 4px; }}
 </style>
 </head>
@@ -781,11 +653,26 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 {player_cards}
 </body>
 </html>"""
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
 
-    pdf_bytes = html_to_pdf(html_content)
-    filename = f"brothers_rugby_{start_label.replace('/', '-')}_{end_label.replace('/', '-')}.pdf"
-    return dcc.send_bytes(pdf_bytes, filename)
+    page.set_content(html_content, wait_until="load")
 
+    pdf_bytes = page.pdf(
+        format="A4",
+        print_background=True,
+        margin={
+            "top": "10mm",
+            "bottom": "10mm",
+            "left": "10mm",
+            "right": "10mm"
+        }
+    )
+
+    browser.close()
+
+return dcc.send_bytes(pdf_bytes, filename)
 
 # ── Comparison Report PDF ────────────────────────────────────────────────────
 
@@ -825,7 +712,6 @@ def export_comparison_pdf(n_clicks, ref_date):
         ("top_Speed", "Top Speed (m/s)"),
         ("accel_min", "Accel/min"),
         ("decel_min", "Decel/min"),
-        ("m_min", "m/min"),
     ]
 
     def trend_arrow(val, ref_val):
@@ -957,9 +843,26 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 </body>
 </html>"""
 
-    pdf_bytes = html_to_pdf(html_content)
-    filename = f"brothers_rugby_comparison_{ref.strftime('%d-%m-%Y')}.pdf"
-    return dcc.send_bytes(pdf_bytes, filename)
+    with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+
+    page.set_content(html_content, wait_until="load")
+
+    pdf_bytes = page.pdf(
+        format="A4",
+        print_background=True,
+        margin={
+            "top": "10mm",
+            "bottom": "10mm",
+            "left": "10mm",
+            "right": "10mm"
+        }
+    )
+
+    browser.close()
+
+return dcc.send_bytes(pdf_bytes, filename)
 
 
 if __name__ == "__main__":
