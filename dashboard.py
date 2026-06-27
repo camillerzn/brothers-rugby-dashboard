@@ -115,12 +115,13 @@ app.layout = html.Div(
         "margin": "0 auto",
     },
     children=[
-
+        # Titre Principal
         html.H1(
             "Brothers Rugby Dashboard",
             style={"color": COULEURS["bleu"], "fontSize": "28px", "marginBottom": "24px"},
         ),
 
+        # Section Filtres
         html.Div(
             style={
                 "display": "flex",
@@ -137,7 +138,6 @@ app.layout = html.Div(
                         multi=True,
                     ),
                 ]),
-
                 html.Div([
                     html.Label("Position"),
                     dcc.Dropdown(
@@ -146,7 +146,6 @@ app.layout = html.Div(
                         multi=True,
                     ),
                 ]),
-
                 html.Div([
                     html.Label("Session type"),
                     dcc.Dropdown(
@@ -155,7 +154,6 @@ app.layout = html.Div(
                         multi=True,
                     ),
                 ]),
-
                 html.Div([
                     html.Label("Period"),
                     dcc.DatePickerRange(
@@ -169,71 +167,137 @@ app.layout = html.Div(
             ],
         ),
 
-        html.Div(id="kpis-acwr"),
-        html.Div(id="kpis"),
-        html.Div(id="graphs"),
-    ],
-)
+        # Section ACWR
+        html.H3(
+            "Acute:Chronic Workload Ratio (7d / 28d)", 
+            style={
+                "color": COULEURS["gris"],
+                "fontSize": "13px",
+                "marginBottom": "8px",
+                "marginTop": "0"
+            }
+        ), 
+        html.Div(
+            id="kpis-acwr", 
+            style={
+                "display": "grid",
+                "gridTemplateColumns": "repeat(4, 1fr)",
+                "gap": "12px",
+                "marginBottom": "16px"
+            }
+        ),
 
-html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
-        "color": COULEURS["gris"],
-        "fontSize": "13px",
-        "marginBottom": "8px",
-        "marginTop": "0"
-    }), 
-    html.Div(id="kpis-acwr", style={
-        "display": "grid",
-        "gridTemplateColumns": "repeat(4, 1fr)",
-        "gap": "12px",
-        "marginBottom": "16px"
-    }),
+        # Section Moyennes de Session
+        html.H3(
+            "Session averages", 
+            style={
+                "color": COULEURS["gris"],
+                "fontSize": "13px",
+                "marginBottom": "8px",
+            }
+        ),
+        html.Div(
+            id="kpis", 
+            style={
+                "display": "grid",
+                "gridTemplateColumns": "repeat(7, 1fr)",
+                "gap": "12px",
+                "marginBottom": "24px"
+            }
+        ),
 
-    html.H3("Session averages", style={
-        "color": COULEURS["gris"],
-        "fontSize": "13px",
-        "marginBottom": "8px",
-    }),
-    html.Div(id="kpis", style={
-        "display": "grid",
-        "gridTemplateColumns": "repeat(7, 1fr)",
-        "gap": "12px",
-        "marginBottom": "24px"
-    }),
+        # Section Boutons d'Exportation (Weekly & Comparison)
+        html.Div(
+            style={
+                "marginBottom": "16px", 
+                "display": "flex", 
+                "gap": "16px", 
+                "flexWrap": "wrap", 
+                "alignItems": "flex-end"
+            }, 
+            children=[
+                html.Div([
+                    html.Button(
+                        "Export Weekly Report (PDF)",
+                        id="btn-rapport",
+                        style={
+                            "backgroundColor": COULEURS["bleu"],
+                            "color": COULEURS["blanc"],
+                            "border": "none",
+                            "borderRadius": "8px",
+                            "padding": "10px 20px",
+                            "cursor": "pointer",
+                            "fontSize": "14px",
+                            "fontWeight": "600",
+                        }
+                    ),
+                    dcc.Download(id="download-rapport"),
+                ]),
+                html.Div([
+                    html.Label(
+                        "Comparison Report — reference session", 
+                        style={"color": COULEURS["gris"], "fontSize": "12px", "display": "block", "marginBottom": "6px"}
+                    ),
+                    html.Div(
+                        style={"display": "flex", "gap": "12px", "alignItems": "center"}, 
+                        children=[
+                            dcc.DatePickerSingle(
+                                id="date-comparaison",
+                                min_date_allowed=df["date"].min(),
+                                max_date_allowed=df["date"].max(),
+                                date=df["date"].max(),
+                                display_format="DD/MM/YYYY",
+                            ),
+                            html.Button(
+                                "Export Comparison Report (PDF)",
+                                id="btn-comparaison",
+                                style={
+                                    "backgroundColor": "#C77DFF",
+                                    "color": COULEURS["blanc"],
+                                    "border": "none",
+                                    "borderRadius": "8px",
+                                    "padding": "10px 20px",
+                                    "cursor": "pointer",
+                                    "fontSize": "14px",
+                                    "fontWeight": "600",
+                                }
+                            ),
+                            dcc.Download(id="download-comparaison"),
+                        ]
+                    ),
+                ]),
+            ]
+        ),
 
-    html.Div(style={"marginBottom": "16px", "display": "flex", "gap": "16px", "flexWrap": "wrap", "alignItems": "flex-end"}, children=[
-        html.Div([
-            html.Button(
-                "Export Weekly Report (PDF)",
-                id="btn-rapport",
-                style={
-                    "backgroundColor": COULEURS["bleu"],
-                    "color": COULEURS["blanc"],
-                    "border": "none",
-                    "borderRadius": "8px",
-                    "padding": "10px 20px",
-                    "cursor": "pointer",
-                    "fontSize": "14px",
-                    "fontWeight": "600",
-                }
-            ),
-            dcc.Download(id="download-rapport"),
-        ]),
-        html.Div([
-            html.Label("Comparison Report — reference session", style={"color": COULEURS["gris"], "fontSize": "12px", "display": "block", "marginBottom": "6px"}),
-            html.Div(style={"display": "flex", "gap": "12px", "alignItems": "center"}, children=[
-                dcc.DatePickerSingle(
-                    id="date-comparaison",
-                    min_date_allowed=df["date"].min(),
-                    max_date_allowed=df["date"].max(),
-                    date=df["date"].max(),
-                    display_format="DD/MM/YYYY",
+        # Section Graphiques
+        html.Div(
+            id="graphs", 
+            style={
+                "display": "grid",
+                "gridTemplateColumns": "1fr 1fr",
+                "gap": "16px",
+                "marginTop": "24px"
+            }
+        ),
+
+        # Section Season Report (Individuel)
+        html.Div(
+            style={"marginTop": "24px"},
+            children=[
+                html.Label("Season report player", style={"color": COULEURS["gris"], "fontSize": "12px"}),
+                dcc.Dropdown(
+                    id="season-player",
+                    options=[{"label": p, "value": p} for p in players],
+                    placeholder="Select player",
+                    style={"color": "#000", "minWidth": "220px"}
                 ),
                 html.Button(
-                    "Export Comparison Report (PDF)",
-                    id="btn-comparaison",
+                    "Export Season Report (PDF)",
+                    id="btn-season",
                     style={
-                        "backgroundColor": "#C77DFF",
-                        "color": COULEURS["blanc"],
+                        "marginTop": "8px",
+                        "backgroundColor": "#FF8C00",
+                        "color": "white",
                         "border": "none",
                         "borderRadius": "8px",
                         "padding": "10px 20px",
@@ -242,46 +306,11 @@ html.H3("Acute:Chronic Workload Ratio (7d / 28d)", style={
                         "fontWeight": "600",
                     }
                 ),
-                dcc.Download(id="download-comparaison"),
-            ]),
-        ]),
-    ]),
-
-    html.Div(id="graphs", style={
-        "display": "grid",
-        "gridTemplateColumns": "1fr 1fr",
-        "gap": "16px",
-        "marginTop": "24px"
-    }),
-
-    html.Div([
-        html.Label("Season report player", style={"color": COULEURS["gris"], "fontSize": "12px"}),
-
-        dcc.Dropdown(
-        id="season-player",
-        options=[{"label": p, "value": p} for p in players],
-        placeholder="Select player",
-        style={"color": "#000", "minWidth": "220px"}
-    ),
-
-    html.Button(
-        "Export Season Report (PDF)",
-        id="btn-season",
-        style={
-            "marginTop": "8px",
-            "backgroundColor": "#FF8C00",
-            "color": "white",
-            "border": "none",
-            "borderRadius": "8px",
-            "padding": "10px 20px",
-            "cursor": "pointer",
-            "fontSize": "14px",
-            "fontWeight": "600",
-        }
-    ),
-
-    dcc.Download(id="download-season"),
-])
+                dcc.Download(id="download-season"),
+            ]
+        ),
+    ],
+)
 
 
 # ── Helper PDF via Playwright ────────────────────────────────────────────────
