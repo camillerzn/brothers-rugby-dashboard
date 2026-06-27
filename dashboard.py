@@ -653,26 +653,29 @@ tr:nth-child(even) {{ background: #f7f9fc; }}
 {player_cards}
 </body>
 </html>"""
-with sync_playwright() as p:
-    browser = p.chromium.launch()
-    page = browser.new_page()
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
 
-    page.set_content(html_content, wait_until="load")
+        page.set_content(html_content, wait_until="load")
 
-    pdf_bytes = page.pdf(
-        format="A4",
-        print_background=True,
-        margin={
-            "top": "10mm",
-            "bottom": "10mm",
-            "left": "10mm",
-            "right": "10mm"
-        }
+        pdf_bytes = page.pdf(
+            format="A4",
+            print_background=True,
+            margin={
+                "top": "10mm",
+                "bottom": "10mm",
+                "left": "10mm",
+                "right": "10mm"
+            }
+        )
+
+        browser.close()
+
+    return dcc.send_bytes(
+        pdf_bytes,
+        filename=f"Comparison_Report_{ref.strftime('%Y-%m-%d')}.pdf"
     )
-
-    browser.close()
-
-return dcc.send_bytes(pdf_bytes, filename)
 
 # ── Comparison Report PDF ────────────────────────────────────────────────────
 
